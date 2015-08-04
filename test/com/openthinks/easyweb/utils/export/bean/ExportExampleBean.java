@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import openthinks.easyweb.utils.export.bean.DefaultOptionBean;
+import openthinks.easyweb.utils.export.bean.OptionsBean;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.TemplateException;

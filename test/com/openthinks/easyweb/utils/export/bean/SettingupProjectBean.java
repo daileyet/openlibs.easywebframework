@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import openthinks.easyweb.utils.export.bean.OptionsBean;
+
 public class SettingupProjectBean extends SettingupProject {
 	OptionsBean projectSourceOptions, reviewResult;
 	DateFormat dateFormat;

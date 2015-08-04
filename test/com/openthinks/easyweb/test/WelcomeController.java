@@ -1,7 +1,7 @@
 package com.openthinks.easyweb.test;
 
-import com.openthinks.easyweb.annotation.Controller;
-import com.openthinks.easyweb.annotation.Mapping;
+import openthinks.easyweb.annotation.Controller;
+import openthinks.easyweb.annotation.Mapping;
 
 @Controller("/welcome")
 public class WelcomeController {
