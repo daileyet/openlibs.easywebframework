@@ -1,4 +1,4 @@
-package com.openthinks.easyweb.test;
+package openthinks.easyweb.test;
 
 import openthinks.easyweb.annotation.Controller;
 import openthinks.easyweb.annotation.Mapping;
