@@ -19,6 +19,11 @@ import openthinks.easyweb.annotation.process.objects.WebUnit;
 import openthinks.easyweb.context.WebConfigure;
 import openthinks.easyweb.context.WebContexts;
 
+/**
+ * The easyweb processor for annotation configure approach 
+ * @author dailey.yet@outlook.com
+ *
+ */
 public class WebProcesser {
 
 	public static final String WEB_ROOT = "EasyWeb_Container";
@@ -57,6 +62,11 @@ public class WebProcesser {
 
 	}
 
+	/**
+	 * Web container processor 
+	 * @author dailey.yet@outlook.com
+	 *
+	 */
 	class WebContainerProcesser extends AbstractProcesser<WebContainer> {
 
 		@Override
@@ -82,8 +92,7 @@ public class WebProcesser {
 		}
 
 		// TODO
-		private List<Object> getControllerInstances(
-				List<Class<?>> controllerClasses) {
+		private List<Object> getControllerInstances(List<Class<?>> controllerClasses) {
 			List<Object> controllerInstance = new ArrayList<Object>();
 			for (Class<?> clazz : controllerClasses) {
 				try {
@@ -112,10 +121,15 @@ public class WebProcesser {
 				tempPack = tempPack.substring(0, all_index);
 			}
 			tempPack = tempPack.replace(".", PATH_SPLITER);
-			return WebUtils.contactFilePath(getWebClassDir(),tempPack);
+			return WebUtils.contactFilePath(getWebClassDir(), tempPack);
 		}
 	}
 
+	/**
+	 * Web controller processor
+	 * @author dailey.yet@outlook.com
+	 *
+	 */
 	class WebControllerProcesser extends AbstractProcesser<WebController> {
 		@Override
 		public WebController process() {
@@ -136,6 +150,11 @@ public class WebProcesser {
 		}
 	}
 
+	/**
+	 * Web method processor
+	 * @author dailey.yet@outlook.com
+	 *
+	 */
 	class WebMethodProcesser extends AbstractProcesser<WebMethod> {
 
 		@Override
@@ -155,16 +174,14 @@ public class WebProcesser {
 			this.controllerClasss = controllerClasss;
 		}
 
-		private String getClassName(String classFileWholePath,
-				String classPackRootDir) {
+		private String getClassName(String classFileWholePath, String classPackRootDir) {
 			String cfwp = classFileWholePath.toUpperCase();
 			String cprd = classPackRootDir.toUpperCase();
 			//fix file path not unified
-			cprd=WebUtils.contactFilePath(cprd, "");
+			cprd = WebUtils.contactFilePath(cprd, "");
 			int index = cfwp.indexOf(cprd);
 			// TODO check param1 contain param2
-			String className = classFileWholePath.substring(index
-					+ cprd.length());
+			String className = classFileWholePath.substring(index + cprd.length());
 			return className.replace(PATH_SPLITER, ".").replace(".class", "");
 		}
 
@@ -173,10 +190,8 @@ public class WebProcesser {
 			if (file.isDirectory()) {
 				file.listFiles(this);
 			} else {
-				if (file.getName().toUpperCase()
-						.endsWith(CONTROLLER_FILE_SUFFIX.toUpperCase())) {
-					String className = getClassName(file.getAbsolutePath(),
-							getWebClassDir());
+				if (file.getName().toUpperCase().endsWith(CONTROLLER_FILE_SUFFIX.toUpperCase())) {
+					String className = getClassName(file.getAbsolutePath(), getWebClassDir());
 					try {
 						controllerClasss.add(Class.forName(className));
 					} catch (ClassNotFoundException e) {
@@ -190,13 +205,12 @@ public class WebProcesser {
 	}
 
 	protected String getWebClassDir() {
-		String web_class_dir = (String) this.servletContext
-				.getAttribute(WEB_CLASS_DIR);
+		String web_class_dir = (String) this.servletContext.getAttribute(WEB_CLASS_DIR);
 		if (web_class_dir == null) {
 			web_class_dir = this.servletContext.getInitParameter(WEB_CLASS_DIR);
 			if (web_class_dir == null)
-				web_class_dir = servletContext.getRealPath("") + PATH_SPLITER
-						+ "WEB-INF" + PATH_SPLITER + "classes" + PATH_SPLITER;
+				web_class_dir = servletContext.getRealPath("") + PATH_SPLITER + "WEB-INF" + PATH_SPLITER + "classes"
+						+ PATH_SPLITER;
 		}
 		return web_class_dir;
 	}

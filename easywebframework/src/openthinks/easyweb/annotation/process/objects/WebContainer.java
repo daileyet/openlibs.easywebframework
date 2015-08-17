@@ -7,6 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+/**
+ * Represent all related objects of easyweb framework
+ * @author dailey.yet@outlook.com
+ *
+ */
 public class WebContainer implements WebUnit {
 	private final ServletContext context;
 	private final Set<WebController> childern;
@@ -19,6 +24,10 @@ public class WebContainer implements WebUnit {
 		this.mapping = new ConcurrentHashMap<String, WebMethod>();
 	}
 
+	/**
+	 * add an child object of WebController
+	 * @param child WebController
+	 */
 	public void add(WebController child) {
 		if (child.isValid() && childern.add(child)) {
 			child.parent(this);

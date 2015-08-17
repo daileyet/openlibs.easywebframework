@@ -5,20 +5,20 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import openthinks.easyweb.annotation.Controller;
+import openthinks.easyweb.context.Bootstrap;
 
 /**
- * tell the easyweb which package should take it as the {@link Controller}
+ * For configure item for bootstrap class
  * @author dailey.yet@outlook.com
- *
+ * @see Bootstrap
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface ScanPackages {
+public @interface BootstrapClass {
 
 	/**
-	 * the array for need scanned package name, the easyweb framework will search the {@link Controller} and initial them at these packages
-	 * @return String[]
+	 * the full name of bootstrap class
+	 * @return String
 	 */
-	String[] value();
+	String value() default "openthinks.easyweb.context.NullBootstrap";
 }

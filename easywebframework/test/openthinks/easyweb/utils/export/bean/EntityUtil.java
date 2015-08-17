@@ -1,4 +1,4 @@
-package com.openthinks.easyweb.utils.export.bean;
+package openthinks.easyweb.utils.export.bean;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

@@ -6,6 +6,11 @@ import java.util.Set;
 import openthinks.easyweb.WebUtils;
 import openthinks.easyweb.annotation.Controller;
 
+/**
+ * The web controller unit
+ * @author dailey.yet@outlook.com
+ * @see Controller
+ */
 public class WebController implements WebUnit {
 	private final Object instance;
 	private final Controller controller;
@@ -33,8 +38,7 @@ public class WebController implements WebUnit {
 		String controllerName = controller.name();
 		if (controllerName == null || "".equals(controllerName)) {
 			controllerName = this.type.getSimpleName();
-			controllerName = controllerName.substring(0, 1).toLowerCase()
-					.concat(controllerName.substring(1));
+			controllerName = controllerName.substring(0, 1).toLowerCase().concat(controllerName.substring(1));
 		}
 		return controllerName;
 	}
@@ -80,8 +84,7 @@ public class WebController implements WebUnit {
 
 	@Override
 	public String getFullPath() {
-		return WebUtils.contactPath(parent().getFullPath(),
-				this.getRelativePath());
+		return WebUtils.contactPath(parent().getFullPath(), this.getRelativePath());
 	}
 
 	@Override

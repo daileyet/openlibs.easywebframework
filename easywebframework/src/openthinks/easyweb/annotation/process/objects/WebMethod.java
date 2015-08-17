@@ -16,6 +16,7 @@ import openthinks.easyweb.annotation.Mapping;
 import openthinks.easyweb.context.handler.WebAttributers;
 
 /**
+ * The web method unit
  * @author minjdai
  * @date 2013-6-6
  */
@@ -74,8 +75,7 @@ public class WebMethod implements WebUnit {
 
 	@Override
 	public String getFullPath() {
-		return WebUtils.contactPath(parent().getFullPath(),
-				this.getRelativePath());
+		return WebUtils.contactPath(parent().getFullPath(), this.getRelativePath());
 	}
 
 	@Override
@@ -83,13 +83,25 @@ public class WebMethod implements WebUnit {
 		return mapping != null;
 	}
 
+	/**
+	 * get method response reference
+	 * @return WebMethodResponse
+	 */
 	public WebMethodResponse getMethodResponse() {
 		return WebMethodResponse.build(method);
 	}
 
-	public Object invoke(HttpServletRequest req, HttpServletResponse resp)
-			throws IllegalArgumentException, IllegalAccessException,
-			InvocationTargetException {
+	/**
+	 * invoke this web method
+	 * @param req HttpServletRequest
+	 * @param resp HttpServletResponse
+	 * @return Object
+	 * @throws IllegalArgumentException
+	 * @throws IllegalAccessException
+	 * @throws InvocationTargetException
+	 */
+	public Object invoke(HttpServletRequest req, HttpServletResponse resp) throws IllegalArgumentException,
+			IllegalAccessException, InvocationTargetException {
 		Class<?>[] parametersType = method.getParameterTypes();
 		Object[] parameterValues = new Object[parametersType.length];
 		int index = 0;

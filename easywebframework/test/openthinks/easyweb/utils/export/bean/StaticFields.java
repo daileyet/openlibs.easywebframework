@@ -1,4 +1,4 @@
-package com.openthinks.easyweb.utils.export.bean;
+package openthinks.easyweb.utils.export.bean;
 
 public interface StaticFields {
 	public static final String LOGINUSER = "LOGINUSER";

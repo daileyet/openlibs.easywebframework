@@ -1,6 +1,6 @@
 package openthinks.easyweb.context.parser;
 
-import openthinks.easyweb.annotation.configure.BootstarpClass;
+import openthinks.easyweb.annotation.configure.BootstrapClass;
 import openthinks.easyweb.annotation.configure.EasyConfigure;
 import openthinks.easyweb.annotation.configure.RequestSuffixs;
 import openthinks.easyweb.annotation.configure.ScanPackages;
@@ -47,8 +47,8 @@ public class WebConfigureAnnoationParser implements ConfigureParser {
 	public Bootstrap bootstarp() throws ClassNotFoundException,
 			InstantiationException, IllegalAccessException {
 		Class<?> bootstarp = this.configureClass;
-		BootstarpClass bootAnnotation = configureClass
-				.getAnnotation(BootstarpClass.class);
+		BootstrapClass bootAnnotation = configureClass
+				.getAnnotation(BootstrapClass.class);
 		if (bootAnnotation != null) {
 			bootstarp = Class.forName(bootAnnotation.value());
 		}

@@ -12,12 +12,17 @@ import openthinks.easyweb.context.RequestSuffix;
 import openthinks.easyweb.context.WebContexts;
 import openthinks.easyweb.exception.CheckNoPassException;
 
+/**
+ * Web utilities for path, encode
+ * @author dailey.yet@outlook.com
+ *
+ */
 public class WebUtils {
 
 	public static WebMethod getWebMethod(HttpServletRequest req) {
 		String path = req.getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path,
-				WebContexts.get().getWebConfigure().getRequestSuffix());
+		String mappingPath = WebUtils.convertToRequestMapingPath(path, WebContexts.get().getWebConfigure()
+				.getRequestSuffix());
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
 		return webMethod;
@@ -65,10 +70,9 @@ public class WebUtils {
 			}
 		}
 		return fp + "/" + rp;
-		
+
 	}
-	
-	
+
 	/**
 	 * Used for local file path
 	 * @param fullPath
@@ -84,7 +88,7 @@ public class WebUtils {
 		String fp = fullPath;
 		if (fp.lastIndexOf(WebProcesser.PATH_SPLITER) < 1) {
 			if (WebProcesser.PATH_SPLITER.equals(fp.trim())) {// Fix Bug for root path is "/" and
-										// controller's root path is default
+				// controller's root path is default
 				fp = "";
 			}
 		} else {
@@ -93,11 +97,10 @@ public class WebUtils {
 			}
 		}
 		return fp + WebProcesser.PATH_SPLITER + rp;
-		
+
 	}
 
-	public static String convertToRequestMapingPath(String requestURI,
-			RequestSuffix suffix) {
+	public static String convertToRequestMapingPath(String requestURI, RequestSuffix suffix) {
 		for (String option : suffix.options()) {
 			String URI = requestURI.toLowerCase();
 			if (!URI.endsWith(option)) {
@@ -109,16 +112,13 @@ public class WebUtils {
 		return requestURI;
 	}
 
-	public static String convertToRequestURI(String requestMappingPath,
-			RequestSuffix suffix) {
+	public static String convertToRequestURI(String requestMappingPath, RequestSuffix suffix) {
 		String requestURI = requestMappingPath + suffix.options()[0];
 		return requestURI;
 	}
 
-	public static void checkParamNumbers(Class<?>[] paramTypes, Object[] args)
-			throws CheckNoPassException {
-		if (paramTypes != null && args != null
-				&& paramTypes.length == args.length) {
+	public static void checkParamNumbers(Class<?>[] paramTypes, Object[] args) throws CheckNoPassException {
+		if (paramTypes != null && args != null && paramTypes.length == args.length) {
 			return;// PASS
 		} else if (paramTypes == null && args == null) {
 			return;// PASS
@@ -126,26 +126,20 @@ public class WebUtils {
 		throw new CheckNoPassException(WebUtils.class, "checkParamNumbers");
 	}
 
-	public static void checkParamTypes(Class<?>[] paramTypes, Object[] args)
-			throws CheckNoPassException {
+	public static void checkParamTypes(Class<?>[] paramTypes, Object[] args) throws CheckNoPassException {
 		if (paramTypes != null && args != null) {
 			for (int index = 0; index < paramTypes.length; index++) {
 				try {
-					if (args[index] == null
-							|| paramTypes[index] == args[index].getClass()) {
+					if (args[index] == null || paramTypes[index] == args[index].getClass()) {
 						continue; // PASS
 					}
-					if (args[index] == null
-							|| paramTypes[index].isAssignableFrom(args[index]
-									.getClass())) {
+					if (args[index] == null || paramTypes[index].isAssignableFrom(args[index].getClass())) {
 						continue; // PASS
 					}
 				} catch (Exception e) {
-					throw new CheckNoPassException(WebUtils.class,
-							"checkParamTypes", e);
+					throw new CheckNoPassException(WebUtils.class, "checkParamTypes", e);
 				}
-				throw new CheckNoPassException(WebUtils.class,
-						"checkParamTypes");
+				throw new CheckNoPassException(WebUtils.class, "checkParamTypes");
 			}
 			return;// PASS
 		}

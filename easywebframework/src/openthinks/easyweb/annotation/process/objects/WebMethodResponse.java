@@ -31,10 +31,8 @@ public class WebMethodResponse {
 		return response;
 	}
 
-	public static WebMethodResponse build(Class<?> returnType,
-			Annotation... annotations) {
-		WebMethodResponse response = new WebMethodResponse(returnType,
-				annotations);
+	public static WebMethodResponse build(Class<?> returnType, Annotation... annotations) {
+		WebMethodResponse response = new WebMethodResponse(returnType, annotations);
 		return response;
 	}
 
@@ -50,11 +48,14 @@ public class WebMethodResponse {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((returnType == null) ? 0 : returnType.hashCode());
+		result = prime * result + ((returnType == null) ? 0 : returnType.hashCode());
 		return result;
 	}
 
+	/**
+	 * the annotations on this method include the special type annotation {@link ResponseReturn} or not
+	 * @return boolean
+	 */
 	public boolean isDirectResponse() {
 		if (returnAnnotations != null) {
 			for (Annotation anno : returnAnnotations) {
