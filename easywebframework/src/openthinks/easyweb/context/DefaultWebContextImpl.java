@@ -3,14 +3,18 @@ package openthinks.easyweb.context;
 import openthinks.easyweb.annotation.process.WebProcesser;
 import openthinks.easyweb.annotation.process.objects.WebContainer;
 
+/**
+ * Default EasyWeb context implementation
+ * @author dailey.yet@outlook.com
+ *
+ */
 public class DefaultWebContextImpl extends SharedContext {
 	public DefaultWebContextImpl() {
 	}
 
 	@Override
 	public WebConfigure getWebConfigure() {
-		return lookup(WebConfigure.class,
-				InstanceWrapper.build(WebContextConfige.class));
+		return lookup(WebConfigure.class, InstanceWrapper.build(WebContextConfige.class));
 	}
 
 	@Override

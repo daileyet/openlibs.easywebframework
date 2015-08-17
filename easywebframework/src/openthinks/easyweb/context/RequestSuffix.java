@@ -4,8 +4,16 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * The request suffix 
+ * @author dailey.yet@outlook.com
+ *
+ */
 public class RequestSuffix {
 	private final Set<String> suffixes = new HashSet<String>();
+	/**
+	 * the split token between multiple suffix
+	 */
 	public final static String SUFFIX_MULTI_SPLIT = ",";
 
 	public static RequestSuffix build(String suffixStr) {

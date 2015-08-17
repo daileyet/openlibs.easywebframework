@@ -10,7 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import openthinks.libs.utilities.Checker;
+
 /**
+ * The object pool, it will cache all the shared objects which fetch from this pool
  * @author minjdai
  * 
  */
@@ -20,7 +23,6 @@ public class ObjectPool {
 	private final FirstLastObjectNameLookUp pool = new FirstLastObjectNameLookUp();
 	// map to shared objects by alias
 	private final Map<String, Ends> aliasMap = new ConcurrentHashMap<String, Ends>();
-
 	// map to shared objects by class type
 	private final Map<Class<?>, Ends> typeMap = new ConcurrentHashMap<Class<?>, Ends>();
 
@@ -31,6 +33,11 @@ public class ObjectPool {
 		pool.clear();
 	}
 
+	/**
+	 * register the special object by the Class type
+	 * @param type Class<?>
+	 * @param object Object
+	 */
 	public void put(Class<?> type, Object object) {
 		if (type == null)
 			return;
@@ -44,6 +51,12 @@ public class ObjectPool {
 		}
 	}
 
+	/**
+	 * get the shared object by Class type key
+	 * @param <T> object
+	 * @param type Class
+	 * @return T object
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(Class<T> type) {
 		T retVal = null;
@@ -54,6 +67,11 @@ public class ObjectPool {
 		return retVal;
 	}
 
+	/**
+	 * register the special object by the alias name
+	 * @param alias String
+	 * @param object Object
+	 */
 	public void put(String alias, Object object) {
 		if (alias == null)
 			return;
@@ -67,6 +85,12 @@ public class ObjectPool {
 		}
 	}
 
+	/**
+	 * get the shared object by alias name key
+	 * @param alias String
+	 * @param <T> Class
+	 * @return T
+	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(String alias) {
 		T retVal = null;
@@ -77,6 +101,11 @@ public class ObjectPool {
 		return retVal;
 	}
 
+	/**
+	 * make an alias for the shared object
+	 * @param sharedObject Object
+	 * @param alias String
+	 */
 	public void asAlias(Object sharedObject, String alias) {
 		if (alias == null)
 			return;
@@ -88,7 +117,11 @@ public class ObjectPool {
 
 }
 
-// two-level stored data structure
+/**
+ * two-level stored data structure
+ * @author dailey.yet@outlook.com
+ *
+ */
 class FirstLastObjectNameLookUp {
 
 	// entry map
@@ -107,11 +140,10 @@ class FirstLastObjectNameLookUp {
 	}
 
 	private ObjectList getObjectList(Ends ends) {
-		// TODO check ends not null
+		Checker.require(ends).notNull();
 		ObjectList objList = combineMap.get(ends.combine());
 		if (objList == null) {
-			Map<Character, ObjectList> firstEntry = entryMap.get(entryMap
-					.get(ends.first()));// TODO exist issue???
+			Map<Character, ObjectList> firstEntry = entryMap.get(entryMap.get(ends.first()));// TODO exist issue???
 			if (firstEntry != null) {
 				objList = firstEntry.get(ends.last());
 			}
@@ -161,8 +193,7 @@ class FirstLastObjectNameLookUp {
 
 	void clear() {
 		combineMap.clear();
-		for (Map.Entry<Character, Map<Character, ObjectList>> entry : entryMap
-				.entrySet()) {
+		for (Map.Entry<Character, Map<Character, ObjectList>> entry : entryMap.entrySet()) {
 			Map<Character, ObjectList> value = entry.getValue();
 			if (value != null) {
 				value.clear();
@@ -214,7 +245,7 @@ class FirstLastObjectNameLookUp {
  */
 class Ends {
 	public static Ends build(Object object) {
-		// TODO check object not null
+		Checker.require(object).notNull();
 		return new Ends(object.getClass().getName());
 	}
 
@@ -261,9 +292,7 @@ class Ends {
 	}
 
 	public Ends(final String className) {
-		ends = className.substring(0, 1)
-				+ className.substring(className.length() - 1,
-						className.length());
+		ends = className.substring(0, 1) + className.substring(className.length() - 1, className.length());
 	}
 
 	public Character first() {

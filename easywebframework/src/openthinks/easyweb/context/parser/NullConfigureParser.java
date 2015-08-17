@@ -12,23 +12,12 @@ import openthinks.easyweb.context.NullBootstrap;
  */
 public class NullConfigureParser implements ConfigureParser {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.openthinks.easyweb.context.parser.ConfigureParser#scanPackages()
-	 */
 	@Override
 	public String[] scanPackages() {
 
 		return new String[0];
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.openthinks.easyweb.context.parser.ConfigureParser#requestSuffix()
-	 */
 	@Override
 	public String requestSuffix() {
 		return "";

@@ -8,13 +8,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import openthinks.easyweb.annotation.Controller;
 import openthinks.easyweb.annotation.process.objects.WebContainer;
 import openthinks.easyweb.annotation.process.objects.WebController;
 import openthinks.easyweb.annotation.process.objects.WebMethod;
 import openthinks.easyweb.context.WebContexts;
 
 /**
- * Servlet implementation class WebProcessMonitor
+ * Servlet implementation class WebProcessMonitor<BR>
+ * Simple monitor for all the configured {@link Controller}
  */
 public class WebProcessMonitor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -24,7 +26,6 @@ public class WebProcessMonitor extends HttpServlet {
 	 */
 	public WebProcessMonitor() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -32,8 +33,7 @@ public class WebProcessMonitor extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
@@ -42,8 +42,8 @@ public class WebProcessMonitor extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
+			IOException {
 		WebContainer container = WebContexts.get().getWebContainer();
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("UTF-8");

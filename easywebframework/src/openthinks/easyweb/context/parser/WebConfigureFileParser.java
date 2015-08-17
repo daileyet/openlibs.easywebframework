@@ -6,6 +6,7 @@ package openthinks.easyweb.context.parser;
 import openthinks.easyweb.context.Bootstrap;
 
 /**
+ * Get EasyWeb configuration from file
  * @author minjdai
  * 
  */

@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Wrapped of HTTP request and HTTPP response
  * @author minjdai
  * 
  */
@@ -26,8 +27,7 @@ public class WebAttributers {
 		PAGE, REQUEST, SESSION, APPLICATION
 	}
 
-	public WebAttributers(HttpServletRequest request,
-			HttpServletResponse response) {
+	public WebAttributers(HttpServletRequest request, HttpServletResponse response) {
 		super();
 		this.request = request;
 		this.response = response;
@@ -70,8 +70,7 @@ public class WebAttributers {
 		return getAttribute(attributeName, WebScope.APPLICATION);
 	}
 
-	public void addAttribute(String attributeName, Object attributeValue,
-			WebScope scope) {
+	public void addAttribute(String attributeName, Object attributeValue, WebScope scope) {
 
 		switch (scope) {
 		case PAGE:
@@ -81,14 +80,12 @@ public class WebAttributers {
 		case SESSION:
 			request.getSession().setAttribute(attributeName, attributeValue);
 		case APPLICATION:
-			request.getSession().getServletContext()
-					.setAttribute(attributeName, attributeValue);
+			request.getSession().getServletContext().setAttribute(attributeName, attributeValue);
 			break;
 		}
 	}
 
-	public void addError(String attributeName, Object attributeValue,
-			WebScope scope) {
+	public void addError(String attributeName, Object attributeValue, WebScope scope) {
 		error.put(attributeName, attributeValue);
 		switch (scope) {
 		case PAGE:
@@ -98,8 +95,7 @@ public class WebAttributers {
 		case SESSION:
 			request.getSession().setAttribute(ERROR_NAME, error);
 		case APPLICATION:
-			request.getSession().getServletContext()
-					.setAttribute(ERROR_NAME, error);
+			request.getSession().getServletContext().setAttribute(ERROR_NAME, error);
 			break;
 		}
 	}
@@ -113,8 +109,7 @@ public class WebAttributers {
 		case SESSION:
 			request.getSession().removeAttribute(attributeName);
 		case APPLICATION:
-			request.getSession().getServletContext()
-					.removeAttribute(attributeName);
+			request.getSession().getServletContext().removeAttribute(attributeName);
 			break;
 		}
 	}
@@ -128,8 +123,7 @@ public class WebAttributers {
 		case SESSION:
 			return request.getSession().getAttribute(attributeName);
 		case APPLICATION:
-			request.getSession().getServletContext()
-					.getAttribute(attributeName);
+			request.getSession().getServletContext().getAttribute(attributeName);
 		default:
 			return null;
 		}

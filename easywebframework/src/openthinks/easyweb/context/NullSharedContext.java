@@ -12,30 +12,18 @@ import openthinks.easyweb.annotation.process.objects.WebContainer;
  */
 public class NullSharedContext extends SharedContext {
 
-	/* (non-Javadoc)
-	 * @see com.openthinks.easyweb.context.WebContext#getWebConfigure()
-	 */
 	@Override
 	public WebConfigure getWebConfigure() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openthinks.easyweb.context.WebContext#getWebProcesser()
-	 */
 	@Override
 	public WebProcesser getWebProcesser() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openthinks.easyweb.context.WebContext#getWebContainer()
-	 */
 	@Override
 	public WebContainer getWebContainer() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -18,6 +18,7 @@ import openthinks.easyweb.annotation.process.objects.WebMethod;
 import openthinks.easyweb.annotation.process.objects.WebUnit;
 import openthinks.easyweb.context.WebConfigure;
 import openthinks.easyweb.context.WebContexts;
+import openthinks.libs.utilities.Checker;
 
 /**
  * The easyweb processor for annotation configure approach 
@@ -91,7 +92,6 @@ public class WebProcesser {
 			return container;
 		}
 
-		// TODO
 		private List<Object> getControllerInstances(List<Class<?>> controllerClasses) {
 			List<Object> controllerInstance = new ArrayList<Object>();
 			for (Class<?> clazz : controllerClasses) {
@@ -114,7 +114,7 @@ public class WebProcesser {
 		}
 
 		private String getPackPath(String pack) {
-			// TODO check pack is not null
+			Checker.require(pack).notNull();
 			int all_index = pack.indexOf("*");
 			String tempPack = pack;
 			if (all_index > 0) {// com.xxx.*
