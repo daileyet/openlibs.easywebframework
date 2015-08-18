@@ -11,6 +11,7 @@ import openthinks.easyweb.annotation.process.objects.WebMethod;
 import openthinks.easyweb.context.RequestSuffix;
 import openthinks.easyweb.context.WebContexts;
 import openthinks.easyweb.exception.CheckNoPassException;
+import openthinks.libs.utilities.Checker;
 
 /**
  * Web utilities for path, encode
@@ -19,6 +20,11 @@ import openthinks.easyweb.exception.CheckNoPassException;
  */
 public class WebUtils {
 
+	/**
+	 * get the instance of {@link WebMethod} by the {@link HttpServletRequest}
+	 * @param req HttpServletRequest
+	 * @return WebMethod
+	 */
 	public static WebMethod getWebMethod(HttpServletRequest req) {
 		String path = req.getRequestURI();
 		String mappingPath = WebUtils.convertToRequestMapingPath(path, WebContexts.get().getWebConfigure()
@@ -50,18 +56,20 @@ public class WebUtils {
 	 * Used for web path
 	 * @param fullPath
 	 * @param relativePath
-	 * @return
+	 * @return String
 	 */
 	public static String contactPath(String fullPath, String relativePath) {
-		// TODO check parameter can not be null
+		Checker.require(fullPath).notNull();
+		Checker.require(relativePath).notNull();
 		String rp = relativePath;
 		while (rp.indexOf("/") == 0) {
 			rp = rp.substring(1);
 		}
 		String fp = fullPath;
 		if (fp.lastIndexOf("/") < 1) {
-			if ("/".equals(fp.trim())) {// Fix Bug for root path is "/" and
-										// controller's root path is default
+			if ("/".equals(fp.trim())) {
+				// Fix Bug for root path is "/" and
+				// controller's root path is default
 				fp = "";
 			}
 		} else {
@@ -77,17 +85,19 @@ public class WebUtils {
 	 * Used for local file path
 	 * @param fullPath
 	 * @param relativePath
-	 * @return
+	 * @return String
 	 */
 	public static String contactFilePath(String fullPath, String relativePath) {
-		// TODO check parameter can not be null
+		Checker.require(fullPath).notNull();
+		Checker.require(relativePath).notNull();
 		String rp = relativePath;
 		while (rp.indexOf(WebProcesser.PATH_SPLITER) == 0) {
 			rp = rp.substring(1);
 		}
 		String fp = fullPath;
 		if (fp.lastIndexOf(WebProcesser.PATH_SPLITER) < 1) {
-			if (WebProcesser.PATH_SPLITER.equals(fp.trim())) {// Fix Bug for root path is "/" and
+			if (WebProcesser.PATH_SPLITER.equals(fp.trim())) {
+				// Fix Bug for root path is "/" and
 				// controller's root path is default
 				fp = "";
 			}
@@ -100,6 +110,12 @@ public class WebUtils {
 
 	}
 
+	/**
+	 * get the EasyWeb controller method path
+	 * @param requestURI String HTTP request full URL path
+	 * @param suffix {@link RequestSuffix} the suffix of the URL path
+	 * @return String
+	 */
 	public static String convertToRequestMapingPath(String requestURI, RequestSuffix suffix) {
 		for (String option : suffix.options()) {
 			String URI = requestURI.toLowerCase();
@@ -112,6 +128,12 @@ public class WebUtils {
 		return requestURI;
 	}
 
+	/**
+	 * get the full URL path by the EasyWeb controller method path
+	 * @param requestMappingPath String
+	 * @param suffix {@link RequestSuffix}
+	 * @return String
+	 */
 	public static String convertToRequestURI(String requestMappingPath, RequestSuffix suffix) {
 		String requestURI = requestMappingPath + suffix.options()[0];
 		return requestURI;

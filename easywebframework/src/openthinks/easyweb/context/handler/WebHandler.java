@@ -15,7 +15,12 @@ import openthinks.easyweb.annotation.process.objects.WebMethod;
  */
 public interface WebHandler {
 
-	void handle(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException;
+	/**
+	 * handle action for {@link WebMethod}
+	 * @param req HttpServletRequest
+	 * @param resp HttpServletResponse
+	 * @throws IOException
+	 */
+	void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException;
 
 }

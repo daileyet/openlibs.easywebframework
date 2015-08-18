@@ -33,32 +33,17 @@ public class WebMethod implements WebUnit {
 
 	private final Mapping mapping;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.openthinks.easyweb.WebUnit#getRelativePath()
-	 */
 	@Override
 	public String getRelativePath() {
 		return mapping.value();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.openthinks.easyweb.WebUnit#parent()
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public WebController parent() {
 		return this.parent;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.openthinks.easyweb.WebUnit#children()
-	 */
 	@Override
 	public Set<WebUnit> children() {
 		return Collections.emptySet();

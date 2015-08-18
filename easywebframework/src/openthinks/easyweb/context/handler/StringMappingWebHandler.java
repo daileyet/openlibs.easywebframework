@@ -9,6 +9,8 @@ import openthinks.easyweb.WebUtils;
 import openthinks.easyweb.annotation.ResponseReturn;
 import openthinks.easyweb.annotation.process.objects.WebMethod;
 import openthinks.easyweb.annotation.process.objects.WebMethodResponse;
+import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.ProcessLogger;
 
 /**
  * Default handler, handle {@link WebMethod} return String type value
@@ -27,11 +29,9 @@ public class StringMappingWebHandler implements WebHandler {
 			// add '/' before responseValue
 			WebMethodResponse methodResponse = webMethod.getMethodResponse();
 			if (methodResponse.isDirectResponse()) {
-				ResponseReturn responseReturn = methodResponse
-						.getDirectResponseAnnotation();
+				ResponseReturn responseReturn = methodResponse.getDirectResponseAnnotation();
 				resp.setCharacterEncoding(responseReturn.charset());
-				resp.setContentType(responseReturn.contentType() + "; charset="
-						+ responseReturn.charset());
+				resp.setContentType(responseReturn.contentType() + "; charset=" + responseReturn.charset());
 				PrintWriter writer = resp.getWriter();
 				writer.print(responseValue);
 				writer.flush();
@@ -41,7 +41,7 @@ public class StringMappingWebHandler implements WebHandler {
 				req.getRequestDispatcher(responseValue).forward(req, resp);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 	}
 }

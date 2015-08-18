@@ -10,23 +10,25 @@ public class WebHandlerFactory {
 	private static Map<WebMethodResponse, WebHandler> open_lookups = new ConcurrentHashMap<WebMethodResponse, WebHandler>();
 	// inner private lookups
 	static {
-		private_lookups.put(WebMethodResponse.build(void.class),
-				new VoidMappingWebHandler());
-		private_lookups.put(WebMethodResponse.build(String.class),
-				new StringMappingWebHandler());
+		private_lookups.put(WebMethodResponse.build(void.class), new VoidMappingWebHandler());
+		private_lookups.put(WebMethodResponse.build(String.class), new StringMappingWebHandler());
 	}
 
 	/**
 	 * only used for customized handler
 	 * 
-	 * @param methodResponse
-	 * @param webHandler
+	 * @param methodResponse WebMethodResponse
+	 * @param webHandler WebHandler
 	 */
-	public static void register(WebMethodResponse methodResponse,
-			WebHandler webHandler) {
+	public static void register(WebMethodResponse methodResponse, WebHandler webHandler) {
 		open_lookups.put(methodResponse, webHandler);
 	}
 
+	/**
+	 * create {@link WebHandler} by {@link WebMethodResponse}
+	 * @param methodResponse WebMethodResponse
+	 * @return WebHandler
+	 */
 	public static WebHandler createHandler(WebMethodResponse methodResponse) {
 		WebHandler handler = null;
 		if (methodResponse != null) {

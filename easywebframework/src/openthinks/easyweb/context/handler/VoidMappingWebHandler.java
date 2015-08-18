@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import openthinks.easyweb.WebUtils;
 import openthinks.easyweb.annotation.process.objects.WebMethod;
+import openthinks.libs.utilities.CommonUtilities;
+import openthinks.libs.utilities.ProcessLogger;
 
 /**
  * @author minjdai
@@ -17,21 +19,13 @@ import openthinks.easyweb.annotation.process.objects.WebMethod;
  */
 public class VoidMappingWebHandler implements WebHandler {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.openthinks.easyweb.context.handler.WebHandler#handle(javax.servlet
-	 * .http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-	 */
 	@Override
-	public void handle(HttpServletRequest req, HttpServletResponse resp)
-			throws IOException {
+	public void handle(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		WebMethod webMethod = WebUtils.getWebMethod(req);
 		try {
 			webMethod.invoke(req, resp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
 		}
 
 	}

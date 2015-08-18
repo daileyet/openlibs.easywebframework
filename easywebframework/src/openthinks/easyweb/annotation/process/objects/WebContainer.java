@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import openthinks.libs.utilities.Checker;
+
 /**
  * Represent all related objects of easyweb framework
  * @author dailey.yet@outlook.com
@@ -55,8 +57,6 @@ public class WebContainer implements WebUnit {
 		return getRelativePath();
 	}
 
-	// public static final String WEB_ROOT = "http://localhost:8080";
-
 	@Override
 	public String getFullPath() {
 		return getRelativePath();
@@ -76,7 +76,7 @@ public class WebContainer implements WebUnit {
 	 * @return
 	 */
 	public WebMethod lookup(String path) {
-		// TODO path is not null
+		Checker.require(path).notNull();
 		if (!path.startsWith(getRelativePath())) {// BUG on SAE, need full path
 			path = getRelativePath() + path;
 		}
