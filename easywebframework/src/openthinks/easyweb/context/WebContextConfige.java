@@ -11,7 +11,7 @@ import openthinks.easyweb.context.parser.ConfigureParser;
 import openthinks.easyweb.context.parser.WebConfigureAnnoationParser;
 import openthinks.easyweb.context.parser.WebConfigureFileParser;
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.ProcessLogger;
+import openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * The implementation of {@link WebConfigure}

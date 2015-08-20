@@ -10,7 +10,7 @@ import openthinks.easyweb.annotation.ResponseReturn;
 import openthinks.easyweb.annotation.process.objects.WebMethod;
 import openthinks.easyweb.annotation.process.objects.WebMethodResponse;
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.ProcessLogger;
+import openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Default handler, handle {@link WebMethod} return String type value

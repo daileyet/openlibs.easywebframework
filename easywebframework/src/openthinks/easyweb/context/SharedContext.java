@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 
 import openthinks.libs.utilities.Checker;
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.ProcessLogger;
+import openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Shared web context, used {@link ObjectPool} as object shared pool

@@ -12,7 +12,7 @@ import openthinks.easyweb.context.handler.WebAttributers;
 public class HelloController {
 
 	@Mapping("/index")
-	public String index() {
+	public String index(WebAttributers ws) {
 		return "hello.jsp";
 	}
 
@@ -32,5 +32,23 @@ public class HelloController {
 	@ResponseReturn(contentType = "text/xml")
 	public String index3() {
 		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?> <welcome-file-list><welcome-file>index.do</welcome-file></welcome-file-list>";
+	}
+
+	@Mapping("/login")
+	public String toLogin() {
+		return "login.jsp";
+	}
+
+	@Mapping("/login/action")
+	public String doLogin(WebAttributers ws) {
+		String username = (String) ws.get("username");
+		String userpass = (String) ws.get("pass");
+
+		if ("admin".equals(username) && "admin".equals(userpass)) {
+			ws.storeSession("LOGIN_NAME", username);
+			return "hello.jsp";
+		}
+
+		return toLogin();
 	}
 }
