@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import openthinks.easyweb.WebUtils;
 import openthinks.easyweb.annotation.process.objects.WebMethod;
 import openthinks.libs.utilities.CommonUtilities;
-import openthinks.libs.utilities.ProcessLogger;
+import openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * @author minjdai

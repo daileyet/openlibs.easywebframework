@@ -7,6 +7,12 @@
 <title>Welcome</title>
 </head>
 <body>
+<%
+if(session.getAttribute("LOGIN_NAME")!=null){
+	out.print("Hello "+session.getAttribute("LOGIN_NAME"));
+	out.print("<BR>");
+}
+%>
 <p>This is a easy web test page.</p> 
 </body>
 </html>
