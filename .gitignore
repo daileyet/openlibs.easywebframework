@@ -1,1 +1,8 @@
 /build
+/easywebframework/.settings
+/easywebframework/.project
+/easywebframework/.classpath
+lib
+/easywebframeworkTest/.classpath
+/easywebframeworkTest/.project
+/easywebframeworkTest/.settings
