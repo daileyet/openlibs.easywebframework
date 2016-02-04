@@ -1,12 +1,12 @@
-package openthinks.easyweb.test;
+package com.openthinks.easyweb.test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import openthinks.easyweb.annotation.Controller;
-import openthinks.easyweb.annotation.Mapping;
-import openthinks.easyweb.annotation.ResponseReturn;
-import openthinks.easyweb.context.handler.WebAttributers;
+import com.openthinks.easyweb.annotation.Controller;
+import com.openthinks.easyweb.annotation.Mapping;
+import com.openthinks.easyweb.annotation.ResponseReturn;
+import com.openthinks.easyweb.context.handler.WebAttributers;
 
 @Controller
 public class HelloController {
