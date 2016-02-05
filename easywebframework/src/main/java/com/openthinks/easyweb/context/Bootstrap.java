@@ -14,5 +14,14 @@ import com.openthinks.easyweb.context.parser.WebConfigureAnnoationParser;
  * 
  */
 public interface Bootstrap {
+	/**
+	 * initial setting; such as:
+	 * <ul>
+	 * <li> database connection configuration
+	 * <li> file i/o
+	 * </ul>
+	 */
 	public void initial();
+
+	public void cleanUp();
 }

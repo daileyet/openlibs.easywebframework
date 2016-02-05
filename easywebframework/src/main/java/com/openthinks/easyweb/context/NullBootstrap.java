@@ -11,4 +11,8 @@ public class NullBootstrap implements Bootstrap {
 	public void initial() {
 	}
 
+	@Override
+	public void cleanUp() {
+	}
+
 }
