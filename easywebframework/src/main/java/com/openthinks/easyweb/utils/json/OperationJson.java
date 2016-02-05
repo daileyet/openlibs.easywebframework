@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 public class OperationJson {
 	public static final String ERROR_TYEP = "ERROR";
 	public static final String SUCESS_TYEP = "SUCESS";
+	private static Gson gsonInstance;
 	private String type;
 	private String msg;
 	private Object other;
@@ -68,8 +69,15 @@ public class OperationJson {
 	}
 
 	public static String toJson(Object obj) {
-		Gson gson = new Gson();
-		return gson.toJson(obj);
+		return getGsonInstance().toJson(obj);
+	}
+
+	public static Gson getGsonInstance() {
+		return gsonInstance == null ? new Gson() : gsonInstance;
+	}
+
+	public static void setGsonInstance(Gson gsonInstance) {
+		OperationJson.gsonInstance = gsonInstance;
 	}
 
 }

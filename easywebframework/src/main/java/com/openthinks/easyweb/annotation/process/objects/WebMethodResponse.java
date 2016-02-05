@@ -3,6 +3,7 @@ package com.openthinks.easyweb.annotation.process.objects;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import com.openthinks.easyweb.annotation.Jsonp;
 import com.openthinks.easyweb.annotation.ResponseReturn;
 
 /**
@@ -67,11 +68,33 @@ public class WebMethodResponse {
 		return false;
 	}
 
+	public boolean isJsonpResponse() {
+		if (returnAnnotations != null) {
+			for (Annotation anno : returnAnnotations) {
+				if (anno instanceof Jsonp) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public ResponseReturn getDirectResponseAnnotation() {
 		if (returnAnnotations != null) {
 			for (Annotation anno : returnAnnotations) {
 				if (anno instanceof ResponseReturn) {
 					return (ResponseReturn) anno;
+				}
+			}
+		}
+		return null;
+	}
+
+	public Jsonp getJsonpAnnotation() {
+		if (returnAnnotations != null) {
+			for (Annotation anno : returnAnnotations) {
+				if (anno instanceof Jsonp) {
+					return (Jsonp) anno;
 				}
 			}
 		}

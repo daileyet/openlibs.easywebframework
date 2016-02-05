@@ -27,12 +27,24 @@ public class WebContainer implements WebUnit {
 	}
 
 	/**
+	 * reset {@link WebContainer}, clear all processed children and relationship
+	 */
+	public void reset() {
+		this.childern.clear();
+		this.mapping.clear();
+	}
+
+	/**
 	 * add an child object of WebController
 	 * @param child WebController
 	 */
 	public void add(WebController child) {
-		if (child.isValid() && childern.add(child)) {
-			child.parent(this);
+		if (child.isValid()) {
+			boolean isSuccess = false;
+			isSuccess = childern.add(child);
+			if (isSuccess) {
+				child.parent(this);
+			}
 		}
 	}
 
@@ -49,6 +61,10 @@ public class WebContainer implements WebUnit {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<WebController> children() {
+		return childern;
+	}
+
+	public Set<WebController> getWebControllers() {
 		return childern;
 	}
 

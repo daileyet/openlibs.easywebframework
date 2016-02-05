@@ -124,7 +124,12 @@ public class ObjectPool {
  */
 class FirstLastObjectNameLookUp {
 
-	// entry map
+	/*
+	 *  entry map : 
+	 *  			KEY		: Class Name first character 
+	 *  			VALUE	: Map(	KEY:Class Name last character; VALUE: ObjectList)
+	 *  						
+	 */
 	Map<Character, Map<Character, ObjectList>> entryMap = new ConcurrentHashMap<Character, Map<Character, ObjectList>>();
 
 	// combine entry map
@@ -308,7 +313,7 @@ class Ends {
 	}
 
 	public boolean isAssign() {
-		return getIndex() != null || getIndex() < 0;
+		return getIndex() != null && getIndex() >= 0;
 	}
 }
 /**

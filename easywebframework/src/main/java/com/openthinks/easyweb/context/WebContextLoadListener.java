@@ -20,7 +20,6 @@ public class WebContextLoadListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		final ServletContext servletContext = arg0.getServletContext();
-
 		WebContexts.initServletContext(servletContext);
 		// save WebContexts attribute
 		servletContext.setAttribute(WebContexts.EASY_WEB_CONTEXT, WebContexts.newContext());
