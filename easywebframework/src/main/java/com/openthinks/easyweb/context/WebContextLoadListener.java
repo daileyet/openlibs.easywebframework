@@ -13,6 +13,7 @@ public class WebContextLoadListener implements ServletContextListener {
 
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
+		WebContexts.get().getWebConfigure().getBootstarp().cleanUp();
 		WebContexts.cleanUp();
 	}
 
