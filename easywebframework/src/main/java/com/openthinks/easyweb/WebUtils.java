@@ -10,7 +10,6 @@ import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.easyweb.context.WebContexts;
-import com.openthinks.easyweb.exception.CheckNoPassException;
 import com.openthinks.libs.utilities.Checker;
 
 /**
@@ -137,35 +136,6 @@ public class WebUtils {
 	public static String convertToRequestURI(String requestMappingPath, RequestSuffix suffix) {
 		String requestURI = requestMappingPath + suffix.options()[0];
 		return requestURI;
-	}
-
-	public static void checkParamNumbers(Class<?>[] paramTypes, Object[] args) throws CheckNoPassException {
-		if (paramTypes != null && args != null && paramTypes.length == args.length) {
-			return;// PASS
-		} else if (paramTypes == null && args == null) {
-			return;// PASS
-		}
-		throw new CheckNoPassException(WebUtils.class, "checkParamNumbers");
-	}
-
-	public static void checkParamTypes(Class<?>[] paramTypes, Object[] args) throws CheckNoPassException {
-		if (paramTypes != null && args != null) {
-			for (int index = 0; index < paramTypes.length; index++) {
-				try {
-					if (args[index] == null || paramTypes[index] == args[index].getClass()) {
-						continue; // PASS
-					}
-					if (args[index] == null || paramTypes[index].isAssignableFrom(args[index].getClass())) {
-						continue; // PASS
-					}
-				} catch (Exception e) {
-					throw new CheckNoPassException(WebUtils.class, "checkParamTypes", e);
-				}
-				throw new CheckNoPassException(WebUtils.class, "checkParamTypes");
-			}
-			return;// PASS
-		}
-		throw new CheckNoPassException(WebUtils.class, "checkParamTypes");
 	}
 
 }

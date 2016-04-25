@@ -6,7 +6,7 @@ import com.openthinks.easyweb.annotation.configure.RequestSuffixs;
 import com.openthinks.easyweb.annotation.configure.ScanPackages;
 import com.openthinks.easyweb.context.Bootstrap;
 import com.openthinks.easyweb.context.NullBootstrap;
-import com.openthinks.easyweb.exception.CheckNoPassException;
+import com.openthinks.libs.utilities.exception.CheckerNoPassException;
 
 /**
  * Use annotation configure for EasyWeb configuration
@@ -21,13 +21,13 @@ public class WebConfigureAnnoationParser implements ConfigureParser {
 		checkNecessaryAnnoation();
 	}
 
-	private void checkNecessaryAnnoation() throws CheckNoPassException {
+	private void checkNecessaryAnnoation() throws CheckerNoPassException {
 		if (configureClass.getAnnotation(EasyConfigure.class) == null)
-			throw new CheckNoPassException(getClass(), "checkNecessaryAnnoation");
+			throw new CheckerNoPassException(getClass(), "checkNecessaryAnnoation");
 		if (configureClass.getAnnotation(ScanPackages.class) == null)
-			throw new CheckNoPassException(getClass(), "checkNecessaryAnnoation");
+			throw new CheckerNoPassException(getClass(), "checkNecessaryAnnoation");
 		if (configureClass.getAnnotation(RequestSuffixs.class) == null)
-			throw new CheckNoPassException(getClass(), "checkNecessaryAnnoation");
+			throw new CheckerNoPassException(getClass(), "checkNecessaryAnnoation");
 	}
 
 	@Override

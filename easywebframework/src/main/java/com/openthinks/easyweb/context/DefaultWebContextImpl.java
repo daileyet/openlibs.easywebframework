@@ -2,6 +2,7 @@ package com.openthinks.easyweb.context;
 
 import com.openthinks.easyweb.annotation.process.WebProcesser;
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
+import com.openthinks.libs.utilities.InstanceUtilities.InstanceWrapper;
 
 /**
  * Default EasyWeb context implementation
