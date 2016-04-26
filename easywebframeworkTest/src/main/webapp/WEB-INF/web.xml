@@ -4,7 +4,7 @@ xmlns="http://java.sun.com/xml/ns/javaee"
 xmlns:web="http://java.sun.com/xml/ns/javaee" 
 xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
 id="EasywebFramework" version="3.0">
-  <display-name>openlibs.easywebframework</display-name>
+  <display-name>openlibs.easywebframeworktest</display-name>
   <welcome-file-list>
     <welcome-file>index.do</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -45,4 +45,9 @@ id="EasywebFramework" version="3.0">
     <param-name>configureClassName</param-name>
     <param-value>com.openthinks.easyweb.test.EasyWebConfigure</param-value>
   </context-param>
+    <context-param>
+    <param-name>easyweb-class-dir</param-name>
+    <param-value>R:\MyGit\openlibs.easywebframework\easywebframeworkTest\target\classes</param-value>
+  </context-param>
+  
 </web-app>

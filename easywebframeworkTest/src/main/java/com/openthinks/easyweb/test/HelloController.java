@@ -3,6 +3,8 @@ package com.openthinks.easyweb.test;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.Mapping;
 import com.openthinks.easyweb.annotation.ResponseReturn;
@@ -18,7 +20,8 @@ public class HelloController {
 
 	@Mapping("/index2")
 	public void index2(WebAttributers webAttributes) {
-		webAttributes.getResponse().setContentType("text/html;charset=utf-8");
+		HttpServletResponse res = webAttributes.getResponse();
+		res.setContentType("text/html;charset=utf-8");
 		try {
 			PrintWriter writer = webAttributes.getResponse().getWriter();
 			writer.print("hello,welcome");
