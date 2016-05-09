@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.openthinks.easyweb.WebUtils;
+import com.openthinks.easyweb.annotation.Jsonp;
 import com.openthinks.easyweb.annotation.ResponseReturn;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.annotation.process.objects.WebMethodResponse;
@@ -33,6 +34,13 @@ public class StringMappingWebHandler implements WebHandler {
 				resp.setCharacterEncoding(responseReturn.charset());
 				resp.setContentType(responseReturn.contentType() + "; charset=" + responseReturn.charset());
 				PrintWriter writer = resp.getWriter();
+				if (methodResponse.isJsonpResponse()) {
+					Jsonp jsonp = methodResponse.getJsonpAnnotation();
+					String callbackValue = req.getParameter(jsonp.value());
+					if (callbackValue != null && !callbackValue.isEmpty()) {
+						responseValue = callbackValue + "(" + responseValue + ");";
+					}
+				}
 				writer.print(responseValue);
 				writer.flush();
 				return;
