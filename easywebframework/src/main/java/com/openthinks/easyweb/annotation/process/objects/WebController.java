@@ -1,10 +1,14 @@
 package com.openthinks.easyweb.annotation.process.objects;
 
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.Set;
 
 import com.openthinks.easyweb.WebUtils;
+import com.openthinks.easyweb.annotation.AutoComponent;
+import com.openthinks.easyweb.annotation.AutoComponent.KeyType;
 import com.openthinks.easyweb.annotation.Controller;
+import com.openthinks.easyweb.context.WebContexts;
 
 /**
  * The web controller unit
@@ -26,6 +30,39 @@ public class WebController implements WebUnit {
 		this.controller = this.type.getAnnotation(Controller.class);
 		this.childern = new HashSet<WebMethod>();
 		this.name = calculate();
+		this.prepareAutoComponment();
+	}
+
+	private void prepareAutoComponment() {
+		for (Field field : this.type.getDeclaredFields()) {
+
+			AutoComponent autoComponent = field.getAnnotation(AutoComponent.class);
+			if (autoComponent != null) {
+				Object autowireValue = null;
+				KeyType keyType = autoComponent.value();
+				if (keyType == KeyType.CLASS) {
+					Class<?> instanceClass = (autoComponent.implementClass() == Void.class) ? field.getType()
+							: autoComponent.implementClass();
+					autowireValue = WebContexts.get().lookup(instanceClass);
+
+				} else if (keyType == KeyType.BEAN_NAME) {
+					String beanName = autoComponent.beanName();
+					autowireValue = WebContexts.get().lookup(beanName);
+				}
+				if (autowireValue == null) {
+					throw new NullPointerException("Could not autowire this component by @KeyType:" + keyType);
+				}
+				try {
+					field.setAccessible(true);
+					field.set(instance, autowireValue);
+				} catch (IllegalArgumentException e) {
+					throw new AutowireFailedException(e);
+				} catch (IllegalAccessException e) {
+					throw new AutowireFailedException(e);
+				}
+			}
+		}
+
 	}
 
 	Object getInstance() {

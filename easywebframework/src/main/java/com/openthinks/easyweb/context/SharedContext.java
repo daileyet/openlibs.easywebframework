@@ -78,4 +78,14 @@ public abstract class SharedContext implements WebContext {
 		}
 	}
 
+	public <T> T lookup(String beanName) {
+		return objectPool.get(beanName);
+	}
+
+	public <T> void register(String beanName, T object) {
+		if (object != null) {
+			objectPool.put(beanName, object);
+		}
+	}
+
 }
