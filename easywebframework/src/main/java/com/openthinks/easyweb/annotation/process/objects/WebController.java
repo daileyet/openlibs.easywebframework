@@ -114,6 +114,14 @@ public class WebController implements WebUnit {
 		return this.childern;
 	}
 
+	public Set<WebMethod> getWebMethods() {
+		return childern;
+	}
+
+	public int getSize() {
+		return this.childern == null ? 0 : this.childern.size();
+	}
+
 	@Override
 	public String getName() {
 		return this.name;
