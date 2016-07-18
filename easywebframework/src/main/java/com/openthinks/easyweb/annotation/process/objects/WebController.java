@@ -9,6 +9,7 @@ import com.openthinks.easyweb.annotation.AutoComponent;
 import com.openthinks.easyweb.annotation.AutoComponent.KeyType;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.context.WebContexts;
+import com.openthinks.easyweb.exception.AutowireFailedException;
 
 /**
  * The web controller unit

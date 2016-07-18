@@ -23,7 +23,7 @@
 * @date Jul 12, 2016
 * @version V1.0   
 */
-package com.openthinks.easyweb.annotation.process.objects;
+package com.openthinks.easyweb.exception;
 
 /**
  * @author dailey.yet@outlook.com

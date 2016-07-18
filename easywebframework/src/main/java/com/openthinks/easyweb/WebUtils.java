@@ -17,7 +17,26 @@ import com.openthinks.libs.utilities.Checker;
  * @author dailey.yet@outlook.com
  *
  */
-public class WebUtils {
+public final class WebUtils {
+
+	/**
+	 * get easyweb controller method mapping full path
+	 * @param subpath
+	 * @return
+	 */
+	public static String path(String subpath) {
+		String relSubpath = convertToRequestURI(subpath, WebContexts.get().getWebConfigure().getRequestSuffix());
+		return WebContexts.getServletContext().getContextPath() + relSubpath;
+	}
+
+	/**
+	 * get static web resource full path
+	 * @param staticPath
+	 * @return
+	 */
+	public static String pathS(String staticPath) {
+		return WebContexts.getServletContext().getContextPath() + staticPath;
+	}
 
 	/**
 	 * get the instance of {@link WebMethod} by the {@link HttpServletRequest}
