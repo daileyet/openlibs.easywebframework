@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -27,13 +28,24 @@ import com.openthinks.easyweb.context.WebContexts;
  */
 public class WebProcessMonitor extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public static final String TEMPLATE_RESOURCE = "/monitor.template.html";
+	public static final String TEMPLATE_RESOURCE = "monitor.template.html";
+	public static final String TEMPLATE_RESOURCE_CSS = "bootstrap.min.css";
+	public static final String TEMPLATE_RESOURCE_CONFIG = "template.porperties";
+	public static final String TEMPLATE_CONFIG_PAGE_NAME = "TEMPLATE_PAGE_NAME";
+	public static final String TEMPLATE_CONFIG_FILE_NAME = "TEMPLATE_CSS_FILE_NAME";
+	private Properties templateConfig = new Properties();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public WebProcessMonitor() {
 		super();
+		try {
+			templateConfig.load(getClass().getResourceAsStream(TEMPLATE_RESOURCE_CONFIG));
+		} catch (IOException e) {
+			templateConfig.putIfAbsent(TEMPLATE_CONFIG_PAGE_NAME, TEMPLATE_RESOURCE);
+			templateConfig.putIfAbsent(TEMPLATE_CONFIG_FILE_NAME, TEMPLATE_RESOURCE_CSS);
+		}
 	}
 
 	/**
@@ -42,8 +54,6 @@ public class WebProcessMonitor extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//doPost(request, response);
-
 		generatePage(request, response);
 	}
 
@@ -53,32 +63,15 @@ public class WebProcessMonitor extends HttpServlet {
 	 */
 	protected void generatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		WebContainer webContainer = WebContexts.get().getWebContainer();
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(
-				TEMPLATE_RESOURCE)));
-		String line;
-		StringBuffer buffer = new StringBuffer();
+		StringBuffer buffer = readFromSource(templateConfig.getProperty(TEMPLATE_CONFIG_PAGE_NAME));
+		List<WebController> controllers = sortControllers(webContainer);
 		StringBuffer dynamicContent = new StringBuffer();
-		do {
-			line = bufferedReader.readLine();
-			if (line != null)
-				buffer.append(line);
-		} while (line != null);
-		bufferedReader.close();
-
-		List<WebController> controllers = Arrays.asList(webContainer.children().toArray(new WebController[0]));
-		Collections.sort(controllers, new Comparator<WebController>() {
-			@Override
-			public int compare(WebController o1, WebController o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-		});
 		for (WebController controller : controllers) {
 			dynamicContent.append("<tr>");
 			dynamicContent.append("<td>" + controller.getName() + "</td>");
 			dynamicContent.append("<td>" + controller.getType().getName() + "</td>");
 			dynamicContent.append("<td>" + controller.getFullPath() + "</td>");
 			dynamicContent.append("<td>" + controller.getRelativePath() + "</td>");
-
 			dynamicContent.append("<td style=\"padding: 0\">");
 			if (controller.getSize() > 0) {
 				dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
@@ -99,8 +92,43 @@ public class WebProcessMonitor extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
 		String page = buffer.toString().replace("{{tbody.content}}", dynamicContent.toString());
+		page = resolveCssOffline(page);
 		out.print(page);
 		out.flush();
+	}
+
+	/**
+	 * @param webContainer
+	 * @return
+	 */
+	protected List<WebController> sortControllers(WebContainer webContainer) {
+		List<WebController> controllers = Arrays.asList(webContainer.children().toArray(new WebController[0]));
+		Collections.sort(controllers, new Comparator<WebController>() {
+			@Override
+			public int compare(WebController o1, WebController o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+		return controllers;
+	}
+
+	private StringBuffer readFromSource(String templateResource) throws IOException {
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(
+				templateResource)));
+		String line;
+		StringBuffer buffer = new StringBuffer();
+		do {
+			line = bufferedReader.readLine();
+			if (line != null)
+				buffer.append(line);
+		} while (line != null);
+		bufferedReader.close();
+		return buffer;
+	}
+
+	private String resolveCssOffline(String page) throws IOException {
+		StringBuffer cssBuffer = readFromSource(templateConfig.getProperty(TEMPLATE_CONFIG_FILE_NAME));
+		return page.replace("{{bootstrap.min.css}}", cssBuffer.toString());
 	}
 
 	private String getLink(WebMethod method) {
@@ -115,6 +143,15 @@ public class WebProcessMonitor extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 			IOException {
+		//generatePageSimple(response);
+		doGet(request, response);
+	}
+
+	/**
+	 * @param response
+	 * @throws IOException
+	 */
+	protected void generatePageSimple(HttpServletResponse response) throws IOException {
 		WebContainer container = WebContexts.get().getWebContainer();
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("UTF-8");
