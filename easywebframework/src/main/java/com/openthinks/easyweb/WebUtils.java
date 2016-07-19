@@ -3,9 +3,9 @@ package com.openthinks.easyweb;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.openthinks.easyweb.annotation.process.WebProcesser;
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
@@ -109,22 +109,22 @@ public final class WebUtils {
 		Checker.require(fullPath).notNull();
 		Checker.require(relativePath).notNull();
 		String rp = relativePath;
-		while (rp.indexOf(WebProcesser.PATH_SPLITER) == 0) {
+		while (rp.indexOf(WebStatic.PATH_SPLITER) == 0) {
 			rp = rp.substring(1);
 		}
 		String fp = fullPath;
-		if (fp.lastIndexOf(WebProcesser.PATH_SPLITER) < 1) {
-			if (WebProcesser.PATH_SPLITER.equals(fp.trim())) {
+		if (fp.lastIndexOf(WebStatic.PATH_SPLITER) < 1) {
+			if (WebStatic.PATH_SPLITER.equals(fp.trim())) {
 				// Fix Bug for root path is "/" and
 				// controller's root path is default
 				fp = "";
 			}
 		} else {
-			while (fp.lastIndexOf(WebProcesser.PATH_SPLITER) == fp.length() - 1) {
+			while (fp.lastIndexOf(WebStatic.PATH_SPLITER) == fp.length() - 1) {
 				fp = fp.substring(0, fp.length() - 1);
 			}
 		}
-		return fp + WebProcesser.PATH_SPLITER + rp;
+		return fp + WebStatic.PATH_SPLITER + rp;
 
 	}
 
@@ -175,6 +175,64 @@ public final class WebUtils {
 			ip = request.getRemoteAddr();
 		}
 		return ip;
+	}
+
+	/**
+	 * get Web application class directory after deploy
+	 * @param servletContext ServletContext
+	 * @return String
+	 */
+	public static String getWebClassDir(final ServletContext servletContext) {
+		String web_class_dir = (String) servletContext.getAttribute(WebStatic.WEB_CLASS_DIR);
+		if (web_class_dir == null) {
+			web_class_dir = servletContext.getInitParameter(WebStatic.WEB_CLASS_DIR);
+			if (web_class_dir == null)
+				web_class_dir = servletContext.getRealPath("") + WebStatic.PATH_SPLITER + "WEB-INF"
+						+ WebStatic.PATH_SPLITER + "classes" + WebStatic.PATH_SPLITER;
+		}
+		return web_class_dir;
+	}
+
+	public static String getWebClassDir() {
+		return getWebClassDir(WebContexts.getServletContext());
+	}
+
+	/**
+	 * calculate class name by class full path with package and package full path
+	 * @param classFileWholePath
+	 * @param classPackRootDir
+	 * @return
+	 */
+	public static String getClassName(String classFileWholePath, String classPackRootDir) {
+		String cfwp = classFileWholePath.toUpperCase();
+		String cprd = classPackRootDir.toUpperCase();
+		//fix file path not unified
+		cprd = WebUtils.contactFilePath(cprd, "");
+		int index = cfwp.indexOf(cprd);
+		// TODO check param1 contain param2
+		String className = classFileWholePath.substring(index + cprd.length());
+		return className.replace(WebStatic.PATH_SPLITER, ".").replace(".class", "");
+	}
+
+	/**
+	 * get file path for given package
+	 * @param pack String package full name
+	 * @param servletContext ServletContext
+	 * @return String package file path
+	 */
+	public static String getPackPath(String pack, final ServletContext servletContext) {
+		Checker.require(pack).notNull();
+		int all_index = pack.indexOf("*");
+		String tempPack = pack;
+		if (all_index > 0) {// com.xxx.*
+			tempPack = tempPack.substring(0, all_index);
+		}
+		tempPack = tempPack.replace(".", WebStatic.PATH_SPLITER);
+		return WebUtils.contactFilePath(getWebClassDir(servletContext), tempPack);
+	}
+
+	public static String getPackPath(String pack) {
+		return getPackPath(pack, WebContexts.getServletContext());
 	}
 
 }
