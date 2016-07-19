@@ -48,7 +48,7 @@ public class WebContextConfige implements WebConfigure {
 		try {
 			return parser.bootstarp();
 		} catch (Exception e) {
-			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
 		return new NullBootstrap();
 	}

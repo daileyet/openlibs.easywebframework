@@ -49,7 +49,7 @@ public class StringMappingWebHandler implements WebHandler {
 				req.getRequestDispatcher(responseValue).forward(req, resp);
 			}
 		} catch (Exception e) {
-			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
 	}
 }

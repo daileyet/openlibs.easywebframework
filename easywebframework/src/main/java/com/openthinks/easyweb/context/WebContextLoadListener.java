@@ -28,4 +28,11 @@ public class WebContextLoadListener implements ServletContextListener {
 		WebContexts.get().getWebConfigure().getBootstarp().initial();
 		WebContexts.get().getWebProcesser().process();
 	}
+
+	@Override
+	protected void finalize() throws Throwable {
+		super.finalize();
+		WebContexts.get().getWebConfigure().getBootstarp().cleanUp();
+		WebContexts.cleanUp();
+	}
 }

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.openthinks.easyweb.context.handler;
 
 import java.util.HashMap;
@@ -31,7 +28,7 @@ public class WebAttributers {
 		super();
 		this.request = request;
 		this.response = response;
-		this.error = new HashMap<String, Object>();
+		this.error = new HashMap<>();
 	}
 
 	public HttpServletRequest getRequest() {
@@ -50,15 +47,20 @@ public class WebAttributers {
 		return request.getSession().getServletContext();
 	}
 
-	public Object get(String parameterName) {
-		return request.getParameter(parameterName);
+	@SuppressWarnings("unchecked")
+	public <T extends Object> T get(String parameterName) {
+		return (T) request.getParameter(parameterName);
+	}
+
+	public void storeRequest(String attributeName, Object attributeValue) {
+		addAttribute(attributeName, attributeValue, WebScope.REQUEST);
 	}
 
 	public void storeSession(String attributeName, Object attributeValue) {
 		addAttribute(attributeName, attributeValue, WebScope.SESSION);
 	}
 
-	public Object getSession(String attributeName) {
+	public <T extends Object> T getSession(String attributeName) {
 		return getAttribute(attributeName, WebScope.SESSION);
 	}
 
@@ -66,7 +68,7 @@ public class WebAttributers {
 		addAttribute(attributeName, attributeValue, WebScope.APPLICATION);
 	}
 
-	public Object getApplication(String attributeName) {
+	public <T extends Object> T getApplication(String attributeName) {
 		return getAttribute(attributeName, WebScope.APPLICATION);
 	}
 
@@ -114,16 +116,17 @@ public class WebAttributers {
 		}
 	}
 
-	public Object getAttribute(String attributeName, WebScope scope) {
+	@SuppressWarnings("unchecked")
+	public <T extends Object> T getAttribute(String attributeName, WebScope scope) {
 		switch (scope) {
 		case PAGE:
 		case REQUEST:
 
-			return request.getAttribute(attributeName);
+			return (T) request.getAttribute(attributeName);
 		case SESSION:
-			return request.getSession().getAttribute(attributeName);
+			return (T) request.getSession().getAttribute(attributeName);
 		case APPLICATION:
-			request.getSession().getServletContext().getAttribute(attributeName);
+			return (T) request.getSession().getServletContext().getAttribute(attributeName);
 		default:
 			return null;
 		}
