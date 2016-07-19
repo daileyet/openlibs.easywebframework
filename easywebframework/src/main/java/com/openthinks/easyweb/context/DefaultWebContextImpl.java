@@ -20,7 +20,7 @@ public class DefaultWebContextImpl extends SharedContext {
 
 	@Override
 	public WebProcesser getWebProcesser() {
-		return lookup(WebProcesser.class, WebContexts.getServletContext());
+		return lookup(WebProcesser.class);
 	}
 
 	@Override

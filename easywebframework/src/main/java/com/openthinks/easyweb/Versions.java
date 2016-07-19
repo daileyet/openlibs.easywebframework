@@ -32,7 +32,19 @@ import com.openthinks.libs.utilities.version.VersionCenter;
  * @author dailey.yet@outlook.com
  *
  */
-@AppVersion("1.0")
+@AppVersion("1.1")
 public class Versions extends VersionCenter {
 
+	/**
+	 * @AppVersion("1.1")
+	 * @change
+	 * 	Add annotation com.openthinks.easyweb.annotation.Jsonp and support JSONP callback
+	 * 	Add annotation com.openthinks.easyweb.annotation.AutoComponent and support autowire in Controller
+	 * 
+	 */
+
+	/**
+	 * @AppVersion("1.0")
+	 * @base
+	 */
 }
