@@ -25,7 +25,7 @@ public class VoidMappingWebHandler implements WebHandler {
 		try {
 			webMethod.invoke(req, resp);
 		} catch (Exception e) {
-			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e.getMessage());
+			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
 
 	}
