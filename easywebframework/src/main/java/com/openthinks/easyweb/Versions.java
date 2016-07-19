@@ -17,13 +17,15 @@
  * under the License.
  *
 * @Title: Versions.java 
-* @Description: TODO
 * @author dailey.yet@outlook.com  
 * @date Aug 20, 2015
-* @version V1.0   
+* @version V1.1   
 */
 package com.openthinks.easyweb;
 
+import com.openthinks.easyweb.annotation.AutoComponent;
+import com.openthinks.easyweb.annotation.Jsonp;
+import com.openthinks.easyweb.monitor.WebProcessMonitor;
 import com.openthinks.libs.utilities.version.AppVersion;
 import com.openthinks.libs.utilities.version.VersionCenter;
 
@@ -36,15 +38,21 @@ import com.openthinks.libs.utilities.version.VersionCenter;
 public class Versions extends VersionCenter {
 
 	/**
-	 * @AppVersion("1.1")
 	 * @change
-	 * 	Add annotation com.openthinks.easyweb.annotation.Jsonp and support JSONP callback
-	 * 	Add annotation com.openthinks.easyweb.annotation.AutoComponent and support autowire in Controller
-	 * 
+	 * <ul>
+	 * 	<li>Add annotation {@link Jsonp} and support JSONP callback
+	 * 	<li>Add annotation {@link AutoComponent} and support autowire in Controller component
+	 *  <li>Enhance {@link WebProcessMonitor} and add bootstrap css
+	 * 	<li>Add EL function definition file {@linkplain easyweb.tld} and support function in <BR>
+	 * 	<ol>
+	 * 		<li> {@link WebUtils#path(String)}
+	 * 		<li> {@link WebUtils#pathS(String)}
+	 * 	</ol>
+	 * </ul>
 	 */
-
+	String v_1_1;
 	/**
-	 * @AppVersion("1.0")
 	 * @base
 	 */
+	String v_1_0;
 }
