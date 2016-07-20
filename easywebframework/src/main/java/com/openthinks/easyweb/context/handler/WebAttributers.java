@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.openthinks.easyweb.context.handler;
 
 import java.util.HashMap;
@@ -31,7 +28,7 @@ public class WebAttributers {
 		super();
 		this.request = request;
 		this.response = response;
-		this.error = new HashMap<String, Object>();
+		this.error = new HashMap<>();
 	}
 
 	public HttpServletRequest getRequest() {
@@ -52,6 +49,10 @@ public class WebAttributers {
 
 	public Object get(String parameterName) {
 		return request.getParameter(parameterName);
+	}
+
+	public void storeRequest(String attributeName, Object attributeValue) {
+		addAttribute(attributeName, attributeValue, WebScope.REQUEST);
 	}
 
 	public void storeSession(String attributeName, Object attributeValue) {
