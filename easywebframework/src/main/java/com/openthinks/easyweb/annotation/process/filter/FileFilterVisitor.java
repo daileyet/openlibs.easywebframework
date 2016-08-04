@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.util.List;
 
 import com.openthinks.easyweb.WebUtils;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Easyweb component class file base visitor
@@ -25,7 +26,7 @@ public abstract class FileFilterVisitor implements FileFilter {
 			file.listFiles(this);
 		} else {
 			if (acceptClassName(file)) {
-				String className = WebUtils.getClassName(file.getAbsolutePath(), WebUtils.getWebClassDir());
+				String className = getFullClassName(file);
 				try {
 					Class<?> clazz = Class.forName(className);
 					if (acceptClassType(clazz)) {
@@ -33,12 +34,20 @@ public abstract class FileFilterVisitor implements FileFilter {
 						doAddition(clazz);
 					}
 				} catch (ClassNotFoundException e) {
-
+					ProcessLogger.error(e);
 				}
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * @param file File class file
+	 * @return String class full name
+	 */
+	protected String getFullClassName(File file) {
+		return WebUtils.getClassName(file.getAbsolutePath(), WebUtils.getWebClassDir());
 	}
 
 	/**

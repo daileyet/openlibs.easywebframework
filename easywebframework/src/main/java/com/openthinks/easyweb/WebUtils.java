@@ -45,8 +45,8 @@ public final class WebUtils {
 	 */
 	public static WebMethod getWebMethod(HttpServletRequest req) {
 		String path = req.getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path, WebContexts.get().getWebConfigure()
-				.getRequestSuffix());
+		String mappingPath = WebUtils.convertToRequestMapingPath(path,
+				WebContexts.get().getWebConfigure().getRequestSuffix());
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
 		return webMethod;
@@ -221,6 +221,16 @@ public final class WebUtils {
 	 * @return String package file path
 	 */
 	public static String getPackPath(String pack, final ServletContext servletContext) {
+		String tempPack = getPackagePath(pack);
+		return WebUtils.contactFilePath(getWebClassDir(servletContext), tempPack);
+	}
+
+	/**
+	 * only get package path for given package not include absolute file path(which the pacakage root directory)
+	 * @param pack String package full name
+	 * @return
+	 */
+	public static String getPackagePath(String pack) {
 		Checker.require(pack).notNull();
 		int all_index = pack.indexOf("*");
 		String tempPack = pack;
@@ -228,7 +238,7 @@ public final class WebUtils {
 			tempPack = tempPack.substring(0, all_index);
 		}
 		tempPack = tempPack.replace(".", WebStatic.PATH_SPLITER);
-		return WebUtils.contactFilePath(getWebClassDir(servletContext), tempPack);
+		return tempPack;
 	}
 
 	public static String getPackPath(String pack) {
