@@ -18,12 +18,27 @@ public @interface ResponseReturn {
 	 * the HTTP response charset
 	 * @return String
 	 */
-	String charset() default "UTF-8";
+	String charset()
 
-	//TODO make a enumn type
+	default "UTF-8";
+
 	/**
 	 * the HTTP response content type
-	 * @return String
+	 * @return ResponseReturnType
 	 */
-	String contentType() default "text/plain";
+	ResponseReturnType contentType() default ResponseReturnType.TEXT_PLAN;
+
+	public enum ResponseReturnType {
+		TEXT_PLAN("text/plain"), TEXT_HTML("text/html"), TEXT_JAVASCRIPT("text/javascript");
+		private String value;
+
+		private ResponseReturnType(String value) {
+			this.value = value;
+		}
+
+		@Override
+		public String toString() {
+			return value;
+		}
+	}
 }
