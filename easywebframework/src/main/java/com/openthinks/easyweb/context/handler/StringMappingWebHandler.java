@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.openthinks.easyweb.WebStatic;
 import com.openthinks.easyweb.WebUtils;
 import com.openthinks.easyweb.annotation.Jsonp;
 import com.openthinks.easyweb.annotation.ResponseReturn;
@@ -45,11 +46,27 @@ public class StringMappingWebHandler implements WebHandler {
 				writer.flush();
 				return;
 			} else {
-				responseValue = WebUtils.contactPath("", responseValue);
-				req.getRequestDispatcher(responseValue).forward(req, resp);
+				if (isRedirectPath(responseValue)) {// redirect flag
+					resp.sendRedirect(getRedirectPath(responseValue));
+				} else {//forward flag
+					responseValue = WebUtils.contactPath("", responseValue);
+					req.getRequestDispatcher(responseValue).forward(req, resp);
+				}
 			}
 		} catch (Exception e) {
 			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
+	}
+
+	private String getRedirectPath(String responseValue) {
+		String newWebPath = responseValue.substring(WebStatic.WEB_REDIRECT_PATH_REFIX.length());
+		return WebUtils.path(newWebPath);
+	}
+
+	private boolean isRedirectPath(String responseValue) {
+		if (responseValue != null && responseValue.startsWith(WebStatic.WEB_REDIRECT_PATH_REFIX)) {
+			return true;
+		}
+		return false;
 	}
 }

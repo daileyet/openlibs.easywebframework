@@ -25,6 +25,7 @@ package com.openthinks.easyweb;
 
 import com.openthinks.easyweb.annotation.AutoComponent;
 import com.openthinks.easyweb.annotation.Jsonp;
+import com.openthinks.easyweb.context.handler.StringMappingWebHandler;
 import com.openthinks.easyweb.monitor.WebProcessMonitor;
 import com.openthinks.libs.utilities.version.AppVersion;
 import com.openthinks.libs.utilities.version.VersionCenter;
@@ -48,6 +49,7 @@ public class Versions extends VersionCenter {
 	 * 		<li> {@link WebUtils#path(String)}
 	 * 		<li> {@link WebUtils#pathS(String)}
 	 * 	</ol>
+	 * 	<li>Add redirect feature in {@link StringMappingWebHandler}, {@link WebUtils#redirect(String)} 
 	 * </ul>
 	 */
 	String v_1_1;
