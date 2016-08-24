@@ -54,5 +54,6 @@ public final class WebStatic {
 	 *  </pre>
 	 */
 	public static final String WEB_CLASS_DIR = "easyweb-class-dir";
+	public static final String WEB_REDIRECT_PATH_REFIX = "REDIRECT::";
 
 }

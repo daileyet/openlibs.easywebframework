@@ -20,8 +20,16 @@ import com.openthinks.libs.utilities.Checker;
 public final class WebUtils {
 
 	/**
+	 * 
+	 * @param subpath String Web method path
+	 * @return String REDIRECT::/controller_path/method_path.htm
+	 */
+	public static String redirect(String subpath){
+		return WebStatic.WEB_REDIRECT_PATH_REFIX+subpath;
+	}
+	/**
 	 * get easyweb controller method mapping full path
-	 * @param subpath
+	 * @param subpath String Web method path
 	 * @return
 	 */
 	public static String path(String subpath) {
