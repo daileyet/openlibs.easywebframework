@@ -4,11 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebController;
+import com.openthinks.easyweb.annotation.process.objects.WebFilter;
+import com.openthinks.easyweb.annotation.process.objects.WebInstancer;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.easyweb.context.WebContexts;
@@ -53,7 +52,8 @@ public class WebProcessMonitor extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		generatePage(request, response);
 	}
 
@@ -64,30 +64,27 @@ public class WebProcessMonitor extends HttpServlet {
 	protected void generatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		WebContainer webContainer = WebContexts.get().getWebContainer();
 		StringBuffer buffer = readFromSource(templateConfig.getProperty(TEMPLATE_CONFIG_PAGE_NAME));
-		List<WebController> controllers = sortControllers(webContainer);
+		Set<WebController> controllers = webContainer.getWebControllers();
+		Set<WebFilter> filters = webContainer.getWebFilters();
+		sortInstancers(controllers);
+		sortInstancers(filters);
 		StringBuffer dynamicContent = new StringBuffer();
-		for (WebController controller : controllers) {
+		if (!controllers.isEmpty()) {
 			dynamicContent.append("<tr>");
-			dynamicContent.append("<td>" + controller.getName() + "</td>");
-			dynamicContent.append("<td>" + controller.getType().getName() + "</td>");
-			dynamicContent.append("<td>" + controller.getFullPath() + "</td>");
-			dynamicContent.append("<td>" + controller.getRelativePath() + "</td>");
-			dynamicContent.append("<td style=\"padding: 0\">");
-			if (controller.getSize() > 0) {
-				dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
-				for (WebMethod method : controller.children()) {
-					dynamicContent.append("<a class=\"list-group-item\" href=\"" + getLink(method) + "\">"
-							+ method.getName() + "</a>");
-				}
-				dynamicContent.append("</div>");
-			} else {
-				dynamicContent.append("<span>no data found</span>");
-			}
-			dynamicContent.append("</td>");
+			dynamicContent.append("<td colspan='5'><b>WebController</b></td>");
 			dynamicContent.append("</tr>");
-
 		}
-
+		for (WebController controller : controllers) {
+			generateAndAppendRow(dynamicContent, controller);
+		}
+		if (!filters.isEmpty()) {
+			dynamicContent.append("<tr>");
+			dynamicContent.append("<td colspan='5'><b>WebFilter</b></td>");
+			dynamicContent.append("</tr>");
+		}
+		for (WebFilter filter : filters) {
+			generateAndAppendRow(dynamicContent, filter);
+		}
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
@@ -98,23 +95,43 @@ public class WebProcessMonitor extends HttpServlet {
 	}
 
 	/**
+	 * @param dynamicContent
+	 * @param controller
+	 */
+	protected void generateAndAppendRow(StringBuffer dynamicContent, WebInstancer instancer) {
+		dynamicContent.append("<tr>");
+		dynamicContent.append("<td>" + instancer.getName() + "</td>");
+		dynamicContent.append("<td>" + instancer.getType().getName() + "</td>");
+		dynamicContent.append("<td>" + instancer.getFullPath() + "</td>");
+		dynamicContent.append("<td>" + instancer.getRelativePath() + "</td>");
+		dynamicContent.append("<td style=\"padding: 0\">");
+		if (instancer.getSize() > 0) {
+			dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
+			for (WebMethod method : instancer.children()) {
+				dynamicContent.append(
+						"<a class=\"list-group-item\" href=\"" + getLink(method) + "\">" + method.getName() + "</a>");
+			}
+			dynamicContent.append("</div>");
+		} else {
+			dynamicContent.append("<span>no data found</span>");
+		}
+		dynamicContent.append("</td>");
+		dynamicContent.append("</tr>");
+	}
+
+	/**
 	 * @param webContainer
 	 * @return
 	 */
-	protected List<WebController> sortControllers(WebContainer webContainer) {
-		List<WebController> controllers = Arrays.asList(webContainer.children().toArray(new WebController[0]));
-		Collections.sort(controllers, new Comparator<WebController>() {
-			@Override
-			public int compare(WebController o1, WebController o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
+	protected void sortInstancers(Set<? extends WebInstancer> instancers) {
+		instancers.stream().sorted((inst1, inst2) -> {
+			return inst1.getName().compareTo(inst2.getName());
 		});
-		return controllers;
 	}
 
 	private StringBuffer readFromSource(String templateResource) throws IOException {
-		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(
-				templateResource)));
+		BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(getClass().getResourceAsStream(templateResource)));
 		String line;
 		StringBuffer buffer = new StringBuffer();
 		do {
@@ -141,8 +158,8 @@ public class WebProcessMonitor extends HttpServlet {
 	 *      response)
 	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		//generatePageSimple(response);
 		doGet(request, response);
 	}
@@ -169,7 +186,7 @@ public class WebProcessMonitor extends HttpServlet {
 			out.print("<th>Web Method Count</th>");
 			out.print("<th>Web Method Details</th>");
 			out.print("</tr>");
-			for (WebController controller : container.children()) {
+			for (WebInstancer controller : container.children()) {
 				out.print("<tr>");
 				out.print("<td>");
 				out.print(controller.getName());
