@@ -18,6 +18,8 @@ public class StringSetSortTest {
 
 		//		Arrays.asList(paths).stream().sorted(WebUtils::comparePathByLongest).filter(target::contains)
 		//				.forEach(System.out::println);
+		
+		System.out.println("".equals("/".substring(1)));
 	}
 
 }

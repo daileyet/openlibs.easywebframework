@@ -25,7 +25,12 @@
 */
 package com.openthinks.easyweb.test.filter;
 
+import java.io.IOException;
+
 import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.openthinks.easyweb.WebUtils;
 import com.openthinks.easyweb.annotation.Filter;
@@ -39,12 +44,41 @@ import com.openthinks.easyweb.context.handler.WebAttributers;
 @Filter
 public class AuthorFilter {
 
-	@Mapping("/index")
-	public String author(WebAttributers was, FilterChain filterChain) {
+//	@Mapping("/index")
+//	public String author(WebAttributers was) {
+//		Object sessionInfo = was.getSession("LOGIN_NAME");
+//		if (sessionInfo == null) {
+//			return WebUtils.redirect("/login");
+//		}
+//		return WebUtils.filterPass();
+//	}
+//	
+//	
+//	@Mapping("/index2")
+//	public String author2(WebAttributers was, FilterChain filterChain) {
+//		Object sessionInfo = was.getSession("LOGIN_NAME");
+//		if (sessionInfo == null) {
+//			return WebUtils.redirect("/login");
+//		}
+//		return WebUtils.filterPass();
+//	}
+	
+	@Mapping("/")
+	public String authorAll(WebAttributers was) {
 		Object sessionInfo = was.getSession("LOGIN_NAME");
 		if (sessionInfo == null) {
 			return WebUtils.redirect("/login");
 		}
 		return WebUtils.filterPass();
+	}
+	
+	@Mapping("/login")
+	public String passToLogin(){
+		return WebUtils.filterPass();
+	}
+	
+	@Mapping("/login/action")
+	public void passDoLogin(HttpServletRequest req, HttpServletResponse reps,FilterChain filterChain) throws IOException, ServletException{
+		filterChain.doFilter(req, reps);
 	}
 }

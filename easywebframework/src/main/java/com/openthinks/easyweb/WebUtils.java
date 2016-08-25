@@ -49,6 +49,10 @@ public final class WebUtils {
 	public static String filterPass() {
 		return WebStatic.WEB_FILTER_PASS_PATH_REFIX;
 	}
+	
+	public static String filterStop() {
+		return WebStatic.WEB_FILTER_STOP_PATH_REFIX;
+	}
 
 	/**
 	 * get easyweb controller method mapping full path

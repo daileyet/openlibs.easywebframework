@@ -58,5 +58,6 @@ public final class WebStatic {
 	public static final String WEB_CLASS_DIR = "easyweb-class-dir";
 	public static final String WEB_REDIRECT_PATH_REFIX = "@REDIRECT::";
 	public static final String WEB_FILTER_PASS_PATH_REFIX = "@FILTER::PASS::";
+	public static final String WEB_FILTER_STOP_PATH_REFIX = "@FILTER::STOP::";;
 
 }

@@ -69,10 +69,11 @@ public class StringMappingWebHandler implements WebHandler {
 				if (isRedirectPath(responseValue)) {// redirect flag
 					((HttpServletResponse) resp).sendRedirect(getRedirectPath(responseValue));
 				} else if (isFilterPassPath(responseValue)) {
-					//DO NOTHING
 					if (filterChain != null)
 						filterChain.doFilter(req, resp);
-				} else {//forward flag
+				} else if (isFilterPassPath(responseValue)) {  
+					//DO NOTHING
+				}else {//forward flag
 					responseValue = WebUtils.contactPath("", responseValue);
 					req.getRequestDispatcher(responseValue).forward(req, resp);
 				}

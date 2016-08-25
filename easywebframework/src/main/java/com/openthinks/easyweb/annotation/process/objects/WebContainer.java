@@ -118,8 +118,8 @@ public class WebContainer implements WebUnit {
 	 * WebMethod.getFullPath()}
 	 * 
 	 * @param path
-	 *            String etc. /web/test/index.do
-	 * @return
+	 *            String request mapping path without {@link RequestSuffix} etc. /web/test/index
+	 * @return WebMethod
 	 */
 	public WebMethod lookup(String path) {
 		Checker.require(path).notNull();
@@ -129,6 +129,12 @@ public class WebContainer implements WebUnit {
 		return this.controllerMapping.get(path);
 	}
 
+	/**
+	 * find {@link WebMethod} by filterMapping path which equals {@link
+	 * WebMethod.getFullPath()}
+	 * @param path String request mapping path without {@link RequestSuffix} etc. /web/test/index
+	 * @return WebMethod
+	 */
 	public WebMethod lookupFilter(String path) {
 		Checker.require(path).notNull();
 		if (!path.startsWith(getRelativePath())) {// BUG on SAE, need full path
@@ -136,13 +142,15 @@ public class WebContainer implements WebUnit {
 		}
 		WebMethod webMethod = this.filterMapping.get(path);
 		if (webMethod == null) {//if not found, try the closet path
+			final String outerPath = path;
 			Optional<String> closetPath = this.filterMapping.keySet().stream().sorted(WebUtils::comparePathByLongest)
-					.filter(path::contains).findFirst();
+					.filter((filterPath)->{
+						return	WebUtils.contactPath(outerPath, "/").contains(WebUtils.contactPath(filterPath,"/"));
+					}).findFirst();
 			if (closetPath.isPresent()) {
 				webMethod = this.filterMapping.get(closetPath.get());
 			}
 		}
-
 		return webMethod;
 	}
 
