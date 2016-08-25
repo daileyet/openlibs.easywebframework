@@ -4,6 +4,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
@@ -20,13 +21,35 @@ import com.openthinks.libs.utilities.Checker;
 public final class WebUtils {
 
 	/**
+	 * sort two given parameter and take the longest as first
+	 * @param path1 String
+	 * @param path2 String
+	 * @return int
+	 */
+	public static int comparePathByLongest(String path1, String path2) {
+		int length1 = path1 == null ? 0 : path1.length();
+		int length2 = path2 == null ? 0 : path2.length();
+		return length2 - length1;
+	}
+
+	/**
 	 * 
 	 * @param subpath String Web method path
 	 * @return String REDIRECT::/controller_path/method_path.htm
 	 */
-	public static String redirect(String subpath){
-		return WebStatic.WEB_REDIRECT_PATH_REFIX+subpath;
+	public static String redirect(String subpath) {
+		return WebStatic.WEB_REDIRECT_PATH_REFIX + subpath;
 	}
+
+	/**
+	 * 
+	 * @param subpath String Web method path
+	 * @return String FILTER::PASS::
+	 */
+	public static String filterPass() {
+		return WebStatic.WEB_FILTER_PASS_PATH_REFIX;
+	}
+
 	/**
 	 * get easyweb controller method mapping full path
 	 * @param subpath String Web method path
@@ -57,6 +80,24 @@ public final class WebUtils {
 				WebContexts.get().getWebConfigure().getRequestSuffix());
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
+		return webMethod;
+	}
+
+	public static WebMethod getControllerWebMethod(HttpServletRequest req) {
+		String path = req.getRequestURI();
+		String mappingPath = WebUtils.convertToRequestMapingPath(path,
+				WebContexts.get().getWebConfigure().getRequestSuffix());
+		WebContainer container = WebContexts.get().getWebContainer();
+		WebMethod webMethod = container.lookup(mappingPath);
+		return webMethod;
+	}
+
+	public static WebMethod getFilterWebMethod(ServletRequest req) {
+		String path = ((HttpServletRequest) req).getRequestURI();
+		String mappingPath = WebUtils.convertToRequestMapingPath(path,
+				WebContexts.get().getWebConfigure().getRequestSuffix());
+		WebContainer container = WebContexts.get().getWebContainer();
+		WebMethod webMethod = container.lookupFilter(mappingPath);
 		return webMethod;
 	}
 

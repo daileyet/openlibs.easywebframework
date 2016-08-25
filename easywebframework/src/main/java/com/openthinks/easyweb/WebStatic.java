@@ -36,12 +36,14 @@ public final class WebStatic {
 	public static final String WEB_ROOT = "EasyWeb_Container";
 	public static final String WEB_CONFIGURE = "EasyWeb_Configure";
 	public static final String WEB_CONTROLLER = "EasyWeb_Controller";
+	public static final String WEB_FILTER = "EasyWeb_Filter";
 	public static final String WEB_METHOD = "EasyWeb_Method";
 	/**
 	 * Controller component conventional end name<BR>
 	 * For example: IndexController
 	 */
 	public static final String CONTROLLER_FILE_SUFFIX = "Controller.class";
+	public static final String FILTER_FILE_SUFFIX = "Filter.class";
 	public static final String PATH_SPLITER = File.separator;
 	/**
 	 * Web application class directory after deploy; <BR>
@@ -54,6 +56,7 @@ public final class WebStatic {
 	 *  </pre>
 	 */
 	public static final String WEB_CLASS_DIR = "easyweb-class-dir";
-	public static final String WEB_REDIRECT_PATH_REFIX = "REDIRECT::";
+	public static final String WEB_REDIRECT_PATH_REFIX = "@REDIRECT::";
+	public static final String WEB_FILTER_PASS_PATH_REFIX = "@FILTER::PASS::";
 
 }

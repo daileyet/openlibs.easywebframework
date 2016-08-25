@@ -1,12 +1,15 @@
 package com.openthinks.easyweb.annotation.process.objects;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import com.openthinks.easyweb.WebUtils;
 import com.openthinks.libs.utilities.Checker;
 
 /**
@@ -16,22 +19,28 @@ import com.openthinks.libs.utilities.Checker;
  */
 public class WebContainer implements WebUnit {
 	private final ServletContext context;
-	private final Set<WebController> childern;
-	private final Map<String, WebMethod> mapping;
+	private final Set<WebController> controllerChildern;
+	private final Map<String, WebMethod> controllerMapping;
+	private final Set<WebFilter> filterChildern;
+	private final Map<String, WebMethod> filterMapping;
 
 	public WebContainer(ServletContext context) {
 		super();
 		this.context = context;
-		this.childern = new HashSet<WebController>();
-		this.mapping = new ConcurrentHashMap<String, WebMethod>();
+		this.controllerChildern = new HashSet<>();
+		this.controllerMapping = new ConcurrentHashMap<>();
+		this.filterChildern = new HashSet<>();
+		this.filterMapping = new ConcurrentHashMap<>();
 	}
 
 	/**
 	 * reset {@link WebContainer}, clear all processed children and relationship
 	 */
 	public void reset() {
-		this.childern.clear();
-		this.mapping.clear();
+		this.controllerChildern.clear();
+		this.controllerMapping.clear();
+		this.filterChildern.clear();
+		this.filterMapping.clear();
 	}
 
 	/**
@@ -41,7 +50,21 @@ public class WebContainer implements WebUnit {
 	public void add(WebController child) {
 		if (child.isValid()) {
 			boolean isSuccess = false;
-			isSuccess = childern.add(child);
+			isSuccess = controllerChildern.add(child);
+			if (isSuccess) {
+				child.parent(this);
+			}
+		}
+	}
+
+	/**
+	 * add an child object of WebFilter
+	 * @param child WebFilter
+	 */
+	public void add(WebFilter child) {
+		if (child.isValid()) {
+			boolean isSuccess = false;
+			isSuccess = filterChildern.add(child);
 			if (isSuccess) {
 				child.parent(this);
 			}
@@ -60,12 +83,19 @@ public class WebContainer implements WebUnit {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public Set<WebController> children() {
-		return childern;
+	public Set<WebInstancer> children() {
+		Set<WebInstancer> set = new HashSet<>();
+		set.addAll(controllerChildern);
+		set.addAll(filterChildern);
+		return Collections.unmodifiableSet(set);
 	}
 
 	public Set<WebController> getWebControllers() {
-		return childern;
+		return controllerChildern;
+	}
+
+	public Set<WebFilter> getWebFilters() {
+		return filterChildern;
 	}
 
 	@Override
@@ -84,7 +114,7 @@ public class WebContainer implements WebUnit {
 	}
 
 	/**
-	 * find {@link WebMethod} by mapping path which equals {@link
+	 * find {@link WebMethod} by controllerMapping path which equals {@link
 	 * WebMethod.getFullPath()}
 	 * 
 	 * @param path
@@ -96,19 +126,42 @@ public class WebContainer implements WebUnit {
 		if (!path.startsWith(getRelativePath())) {// BUG on SAE, need full path
 			path = getRelativePath() + path;
 		}
-		return this.mapping.get(path);
+		return this.controllerMapping.get(path);
+	}
+
+	public WebMethod lookupFilter(String path) {
+		Checker.require(path).notNull();
+		if (!path.startsWith(getRelativePath())) {// BUG on SAE, need full path
+			path = getRelativePath() + path;
+		}
+		WebMethod webMethod = this.filterMapping.get(path);
+		if (webMethod == null) {//if not found, try the closet path
+			Optional<String> closetPath = this.filterMapping.keySet().stream().sorted(WebUtils::comparePathByLongest)
+					.filter(path::contains).findFirst();
+			if (closetPath.isPresent()) {
+				webMethod = this.filterMapping.get(closetPath.get());
+			}
+		}
+
+		return webMethod;
 	}
 
 	/**
 	 * build
 	 */
 	public void buildMapping() {
-		mapping.clear();
-		for (WebController c : this.childern) {
+		controllerMapping.clear();
+		for (WebController c : this.controllerChildern) {
 			for (WebMethod m : c.children()) {
-				mapping.put(m.getFullPath(), m);
+				controllerMapping.put(m.getFullPath(), m);
 			}
 		}
-	}
+		filterMapping.clear();
+		for (WebFilter f : this.filterChildern) {
+			for (WebMethod m : f.children()) {
+				filterMapping.put(m.getFullPath(), m);
+			}
+		}
 
+	}
 }

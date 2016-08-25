@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Set;
 
+import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,7 +24,7 @@ import com.openthinks.easyweb.context.handler.WebAttributers;
 public class WebMethod implements WebUnit {
 
 	private final Method method;
-	private WebController parent;
+	private WebInstancer parent;
 
 	public WebMethod(Method method) {
 		super();
@@ -40,7 +41,7 @@ public class WebMethod implements WebUnit {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public WebController parent() {
+	public WebInstancer parent() {
 		return this.parent;
 	}
 
@@ -49,7 +50,7 @@ public class WebMethod implements WebUnit {
 		return Collections.emptySet();
 	}
 
-	void parent(WebController parent) {
+	void parent(WebInstancer parent) {
 		this.parent = parent;
 	}
 
@@ -85,8 +86,8 @@ public class WebMethod implements WebUnit {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	public Object invoke(HttpServletRequest req, HttpServletResponse resp) throws IllegalArgumentException,
-			IllegalAccessException, InvocationTargetException {
+	public Object invoke(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		Class<?>[] parametersType = method.getParameterTypes();
 		Object[] parameterValues = new Object[parametersType.length];
 		int index = 0;
@@ -98,6 +99,8 @@ public class WebMethod implements WebUnit {
 				parameterValues[index] = req;
 			} else if (type == HttpServletResponse.class) {
 				parameterValues[index] = resp;
+			} else if (type == FilterChain.class) {
+				parameterValues[index] = filterChain;
 			} else {
 				parameterValues[index] = null;
 			}

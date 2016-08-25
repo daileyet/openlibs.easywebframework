@@ -1,6 +1,7 @@
 package com.openthinks.easyweb.context.handler;
 
 import javax.servlet.ServletContext;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import com.openthinks.easyweb.WebUtils;
@@ -24,10 +25,29 @@ public class Handlers {
 	 */
 	public static WebHandler getHandler(HttpServletRequest req, ServletContext servletContext) {
 		String path = req.getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path, WebContexts.get().getWebConfigure()
-				.getRequestSuffix());
+		String mappingPath = WebUtils.convertToRequestMapingPath(path,
+				WebContexts.get().getWebConfigure().getRequestSuffix());
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
+		WebMethodResponse methodResponse = null;
+		if (webMethod != null) {
+			methodResponse = webMethod.getMethodResponse();
+		}
+		return WebHandlerFactory.createHandler(methodResponse);
+	}
+
+	/**
+	 * get the {@link FilterHandler} instance by HTTP servlet request 
+	 * @param request ServletRequest
+	 * @param servletContext ServletContext
+	 * @return FilterHandler
+	 */
+	public static FilterHandler getFilterHandler(ServletRequest request, ServletContext servletContext) {
+		String path = ((HttpServletRequest) request).getRequestURI();
+		String mappingPath = WebUtils.convertToRequestMapingPath(path,
+				WebContexts.get().getWebConfigure().getRequestSuffix());
+		WebContainer container = WebContexts.get().getWebContainer();
+		WebMethod webMethod = container.lookupFilter(mappingPath);
 		WebMethodResponse methodResponse = null;
 		if (webMethod != null) {
 			methodResponse = webMethod.getMethodResponse();
