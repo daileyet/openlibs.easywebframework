@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.openthinks.easyweb.WebStatic;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebController;
@@ -31,6 +34,7 @@ public class WebProcessMonitor extends HttpServlet {
 	public static final String TEMPLATE_RESOURCE_CSS = "bootstrap.min.css";
 	public static final String TEMPLATE_RESOURCE_CONFIG = "template.porperties";
 	public static final String TEMPLATE_CONFIG_PAGE_NAME = "TEMPLATE_PAGE_NAME";
+	public static final String TEMPLATE_CONFIG_ERROR_PAGE_NAME = "TEMPLATE_ERROR_PAGE_NAME";
 	public static final String TEMPLATE_CONFIG_FILE_NAME = "TEMPLATE_CSS_FILE_NAME";
 	private Properties templateConfig = new Properties();
 
@@ -54,7 +58,39 @@ public class WebProcessMonitor extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		generatePage(request, response);
+		boolean enable = false;
+		String remoteEnable = getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		if (remoteEnable != null) {
+			enable = Boolean.valueOf(remoteEnable);
+		}
+		if (!enable && !isLocalAddress(request)) {
+			generateErrorPage(request, response);
+		} else {
+			generatePage(request, response);
+		}
+	}
+
+	private void generateErrorPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		StringBuffer buffer = readFromSource(templateConfig.getProperty(TEMPLATE_CONFIG_ERROR_PAGE_NAME));
+		PrintWriter out = response.getWriter();
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html");
+		String page = buffer.toString();
+		page = resolveCssOffline(page);
+		out.print(page);
+		out.flush();
+	}
+
+	private boolean isLocalAddress(HttpServletRequest request) {
+		String host = request.getRemoteHost();
+		boolean isLocal = false;
+		try {
+			InetAddress inetAddress = InetAddress.getByName(host);
+			isLocal = inetAddress.isAnyLocalAddress() || inetAddress.isLoopbackAddress();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		return isLocal;
 	}
 
 	/**
@@ -71,7 +107,7 @@ public class WebProcessMonitor extends HttpServlet {
 		StringBuffer dynamicContent = new StringBuffer();
 		if (!controllers.isEmpty()) {
 			dynamicContent.append("<tr>");
-			dynamicContent.append("<td colspan='5'><b>WebController</b></td>");
+			dynamicContent.append("<td colspan='4'><b>WebController</b></td>");
 			dynamicContent.append("</tr>");
 		}
 		for (WebController controller : controllers) {
@@ -79,7 +115,7 @@ public class WebProcessMonitor extends HttpServlet {
 		}
 		if (!filters.isEmpty()) {
 			dynamicContent.append("<tr>");
-			dynamicContent.append("<td colspan='5'><b>WebFilter</b></td>");
+			dynamicContent.append("<td colspan='4'><b>WebFilter</b></td>");
 			dynamicContent.append("</tr>");
 		}
 		for (WebFilter filter : filters) {
@@ -103,7 +139,7 @@ public class WebProcessMonitor extends HttpServlet {
 		dynamicContent.append("<td>" + instancer.getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getType().getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getFullPath() + "</td>");
-		dynamicContent.append("<td>" + instancer.getRelativePath() + "</td>");
+		//dynamicContent.append("<td>" + instancer.getRelativePath() + "</td>");
 		dynamicContent.append("<td style=\"padding: 0\">");
 		if (instancer.getSize() > 0) {
 			dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
@@ -164,79 +200,7 @@ public class WebProcessMonitor extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//generatePageSimple(response);
 		doGet(request, response);
-	}
-
-	/**
-	 * @param response
-	 * @throws IOException
-	 */
-	protected void generatePageSimple(HttpServletResponse response) throws IOException {
-		WebContainer container = WebContexts.get().getWebContainer();
-		PrintWriter out = response.getWriter();
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html");
-		if (container == null)
-			return;
-		if (container.children().size() > 0) {
-			out.print("<span>Web Container Objects List:</span></br></br>");
-			out.print("<table border=1 width=100%>");
-			out.print("<tr>");
-			out.print("<th>Controller Name</th>");
-			out.print("<th>Class Type</th>");
-			out.print("<th>Request Mapping</th>");
-			out.print("<th>Path</th>");
-			out.print("<th>Web Method Count</th>");
-			out.print("<th>Web Method Details</th>");
-			out.print("</tr>");
-			for (WebInstancer controller : container.children()) {
-				out.print("<tr>");
-				out.print("<td>");
-				out.print(controller.getName());
-				out.print("</td>");
-				out.print("<td>");
-				out.print(controller.getType().getName());
-				out.print("</td>");
-				out.print("<td>");
-				out.print(controller.getFullPath());
-				out.print("</td>");
-				out.print("<td>");
-				out.print(controller.getRelativePath());
-				out.print("</td>");
-				out.print("<td>");
-				out.print(controller.children().size());
-				out.print("</td>");
-
-				out.print("<td>");
-				if (controller.children().size() > 0) {
-					out.print("<table border=1 width=100%>");
-					out.print("<tr>");
-					out.print("<th>Method Name</th>");
-					out.print("<th>Request Mapping</th>");
-					out.print("</tr>");
-					for (WebMethod method : controller.children()) {
-						out.print("<tr>");
-						out.print("<td width=30%>");
-						out.print(method.getName());
-						out.print("</td>");
-						out.print("<td>");
-						out.print(method.getFullPath());
-						out.print("</td>");
-						out.print("</tr>");
-					}
-					out.print("</table>");
-				} else {
-					out.print("no data found");
-				}
-				out.print("</td>");
-				out.print("</tr>");
-			}
-			out.print("</table>");
-		} else {
-			out.print("no data found");
-		}
-		out.flush();
 	}
 
 }

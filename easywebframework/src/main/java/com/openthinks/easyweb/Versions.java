@@ -53,6 +53,7 @@ public class Versions extends VersionCenter {
 	 * 			<li> Add interface {@link FilterHandler}
 	 * 			<li> Add {@link WebFilter} which like {@link WebController}
 	 * 			<li> Add {@link EasyWebFilterContext} to reference {@link EasyWebFilter}
+	 * 			<li> Add "enableRemote" option for {@link WebProcessMonitor}, 
 	 * 		</ol>
 	 * </ul>
 	 */

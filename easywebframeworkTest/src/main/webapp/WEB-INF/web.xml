@@ -33,6 +33,10 @@ id="EasywebFramework" version="3.0">
   <servlet>
     <servlet-name>monitor</servlet-name>
     <servlet-class>com.openthinks.easyweb.monitor.WebProcessMonitor</servlet-class>
+    <init-param>
+    		<param-name>enableRemote</param-name>
+            <param-value>false</param-value>
+    </init-param>
   </servlet>
   <servlet-mapping>
     <servlet-name>monitor</servlet-name>
@@ -46,6 +50,10 @@ id="EasywebFramework" version="3.0">
   	<filter-name>easyweb_filter</filter-name>
   	<servlet-name>easyweb</servlet-name>
   </filter-mapping>
+<!--    <filter-mapping>
+  	<filter-name>easyweb_filter</filter-name>
+  	<servlet-name>monitor</servlet-name>
+  </filter-mapping> -->
   <listener>
     <listener-class>com.openthinks.easyweb.context.WebContextLoadListener</listener-class>
   </listener>
@@ -53,8 +61,8 @@ id="EasywebFramework" version="3.0">
     <param-name>configureClassName</param-name>
     <param-value>com.openthinks.easyweb.test.EasyWebConfigure</param-value>
   </context-param>
-    <context-param>
-    <param-name>easyweb-class-dir</param-name>
+   <context-param>
+    <param-name>easywebClassDir</param-name>
     <param-value>R:\MyGit\openlibs.easywebframework\easywebframeworkTest\target\classes</param-value>
   </context-param>
   

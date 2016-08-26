@@ -2,14 +2,16 @@ package com.openthinks.easyweb.context;
 
 import java.util.Set;
 
+import com.openthinks.easyweb.WebStatic;
+
 /**
  * The EasyWeb configuration
  * @author dailey.yet@outlook.com
  *
  */
 public interface WebConfigure {
-	String CONFIGURE_FILE_LOCATION = "configureLocation";
-	String CONFIGURE_CLASS_NAME = "configureClassName";
+	String CONFIGURE_FILE_LOCATION = WebStatic.WEB_CONFIGURE_FILE_LOCATION;
+	String CONFIGURE_CLASS_NAME = WebStatic.WEB_CONFIGURE_CLASS_NAME;
 
 	/**
 	 * get the EasyWeb controller package
