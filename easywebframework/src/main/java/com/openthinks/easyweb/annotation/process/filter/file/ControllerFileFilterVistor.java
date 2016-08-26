@@ -1,4 +1,4 @@
-package com.openthinks.easyweb.annotation.process.filter;
+package com.openthinks.easyweb.annotation.process.filter.file;
 
 import java.io.File;
 import java.util.List;

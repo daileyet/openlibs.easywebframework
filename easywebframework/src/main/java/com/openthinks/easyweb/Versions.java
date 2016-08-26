@@ -24,7 +24,13 @@
 package com.openthinks.easyweb;
 
 import com.openthinks.easyweb.annotation.AutoComponent;
+import com.openthinks.easyweb.annotation.Controller;
+import com.openthinks.easyweb.annotation.Filter;
 import com.openthinks.easyweb.annotation.Jsonp;
+import com.openthinks.easyweb.annotation.process.objects.WebController;
+import com.openthinks.easyweb.annotation.process.objects.WebFilter;
+import com.openthinks.easyweb.context.EasyWebFilterContext;
+import com.openthinks.easyweb.context.handler.FilterHandler;
 import com.openthinks.easyweb.context.handler.StringMappingWebHandler;
 import com.openthinks.easyweb.monitor.WebProcessMonitor;
 import com.openthinks.libs.utilities.version.AppVersion;
@@ -38,6 +44,19 @@ import com.openthinks.libs.utilities.version.VersionCenter;
 @AppVersion("1.1")
 public class Versions extends VersionCenter {
 
+	/**
+	 * @change
+	 * <ul>
+	 * 		<li> Add feature {@link EasyWebFilter}
+	 * 		<ol>
+	 * 			<li> Add annotation {@link Filter} which like {@link Controller}
+	 * 			<li> Add interface {@link FilterHandler}
+	 * 			<li> Add {@link WebFilter} which like {@link WebController}
+	 * 			<li> Add {@link EasyWebFilterContext} to reference {@link EasyWebFilter}
+	 * 		</ol>
+	 * </ul>
+	 */
+	String v_1_2;
 	/**
 	 * @change
 	 * <ul>

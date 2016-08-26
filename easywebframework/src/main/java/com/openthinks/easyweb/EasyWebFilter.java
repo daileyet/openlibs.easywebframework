@@ -34,6 +34,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import com.openthinks.easyweb.context.EasyWebFilterContext;
+import com.openthinks.easyweb.context.EasyWebFilterContexts;
 import com.openthinks.easyweb.context.handler.FilterHandler;
 import com.openthinks.easyweb.context.handler.Handlers;
 
@@ -46,6 +48,8 @@ public class EasyWebFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+		EasyWebFilterContext webFilterCtx = EasyWebFilterContexts.get(this.getClass());
+		webFilterCtx.fireInit(filterConfig);
 	}
 
 	@Override
@@ -57,7 +61,8 @@ public class EasyWebFilter implements Filter {
 
 	@Override
 	public void destroy() {
-
+		EasyWebFilterContext webFilterCtx = EasyWebFilterContexts.get(this.getClass());
+		webFilterCtx.fireDestroy();
 	}
 
 }

@@ -23,7 +23,7 @@
 * @date Aug 26, 2016
 * @version V1.0   
 */
-package com.openthinks.easyweb.annotation.process.objects;
+package com.openthinks.easyweb.annotation.process.filter.path;
 
 import java.util.Optional;
 import java.util.Set;
