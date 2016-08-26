@@ -16,33 +16,42 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: FilterPathMatchStrategy.java 
-* @Package com.openthinks.easyweb.annotation.process.objects 
+* @Title: FilterFileFilterVistor.java 
+* @Package com.openthinks.easyweb.annotation.process.core 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 26, 2016
+* @date Aug 25, 2016
 * @version V1.0   
 */
-package com.openthinks.easyweb.annotation.process.objects;
+package com.openthinks.easyweb.annotation.process.filter.file;
 
-import java.util.Optional;
-import java.util.Set;
+import java.io.File;
+import java.util.List;
 
-import com.openthinks.easyweb.context.RequestSuffix;
+import com.openthinks.easyweb.WebStatic;
+import com.openthinks.easyweb.annotation.Filter;
 
 /**
- * Strategy for {@link WebFilter} path
  * @author dailey.yet@outlook.com
- * @date 2016/8/26
+ *
  */
-public interface FilterPathMatchStrategy {
+public class FilterFileFilterVistor extends FileFilterVisitor {
 
-	/**
-	 * find the match filter path
-	 * @param originalPath String request URI without {@link RequestSuffix} etc. /web/test/index
-	 * @param filterPaths Set<String> registered filter path
-	 * @return Optional<String>
-	 */
-	Optional<String> findMatch(String originalPath, Set<String> filterPaths);
+	public FilterFileFilterVistor(List<Class<?>> filterClasss) {
+		super(filterClasss);
+	}
+
+	@Override
+	public boolean acceptClassType(Class<?> clazz) {
+		Filter filterAnnotation = clazz.getAnnotation(Filter.class);
+		return filterAnnotation != null;
+	}
+
+	@Override
+	public boolean acceptClassName(File file) {
+		if (file == null)
+			return false;
+		return file.getName().toUpperCase().endsWith(WebStatic.FILTER_FILE_SUFFIX.toUpperCase());
+	}
 
 }

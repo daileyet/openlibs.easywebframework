@@ -6,6 +6,7 @@ import com.openthinks.easyweb.annotation.configure.RequestSuffixs;
 import com.openthinks.easyweb.annotation.configure.ScanPackages;
 import com.openthinks.easyweb.context.Bootstrap;
 import com.openthinks.easyweb.context.NullBootstrap;
+import com.openthinks.libs.utilities.InstanceUtilities;
 import com.openthinks.libs.utilities.exception.CheckerNoPassException;
 
 /**
@@ -49,11 +50,11 @@ public class WebConfigureAnnoationParser implements ConfigureParser {
 		if (bootAnnotation != null) {
 			bootstarp = Class.forName(bootAnnotation.value());
 		}
-		if (bootstarp != null) {
-			Object bootObj = bootstarp.newInstance();
-			if (bootObj instanceof Bootstrap) {
-				return (Bootstrap) bootObj;
-			}
+		if (bootstarp != null && Bootstrap.class.isAssignableFrom(bootstarp)) {
+			@SuppressWarnings("unchecked")
+			Class<? extends Bootstrap> bootstarpClass = (Class<? extends Bootstrap>) bootstarp;
+			Bootstrap bootObj = InstanceUtilities.create(bootstarpClass, null);
+			return bootObj;
 		}
 		return new NullBootstrap();
 	}

@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.openthinks.easyweb.WebStatic;
 import com.openthinks.easyweb.WebUtils;
-import com.openthinks.easyweb.annotation.process.filter.ControllerFileFilterVistor;
-import com.openthinks.easyweb.annotation.process.filter.FilterFileFilterVistor;
+import com.openthinks.easyweb.annotation.process.filter.file.ControllerFileFilterVistor;
+import com.openthinks.easyweb.annotation.process.filter.file.FilterFileFilterVistor;
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebController;
 import com.openthinks.easyweb.annotation.process.objects.WebFilter;

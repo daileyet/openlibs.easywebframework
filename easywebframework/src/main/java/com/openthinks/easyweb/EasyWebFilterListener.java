@@ -16,42 +16,25 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: FilterFileFilterVistor.java 
-* @Package com.openthinks.easyweb.annotation.process.core 
+* @Title: EasyWebFilterListener.java 
+* @Package com.openthinks.easyweb 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 25, 2016
+* @date Aug 26, 2016
 * @version V1.0   
 */
-package com.openthinks.easyweb.annotation.process.filter;
+package com.openthinks.easyweb;
 
-import java.io.File;
-import java.util.List;
-
-import com.openthinks.easyweb.WebStatic;
-import com.openthinks.easyweb.annotation.Filter;
+import com.openthinks.easyweb.context.EasyWebFilterContext;
 
 /**
  * @author dailey.yet@outlook.com
- *
+ * @date	2016/8/26
  */
-public class FilterFileFilterVistor extends FileFilterVisitor {
-
-	public FilterFileFilterVistor(List<Class<?>> filterClasss) {
-		super(filterClasss);
-	}
-
-	@Override
-	public boolean acceptClassType(Class<?> clazz) {
-		Filter filterAnnotation = clazz.getAnnotation(Filter.class);
-		return filterAnnotation != null;
-	}
-
-	@Override
-	public boolean acceptClassName(File file) {
-		if (file == null)
-			return false;
-		return file.getName().toUpperCase().endsWith(WebStatic.FILTER_FILE_SUFFIX.toUpperCase());
-	}
-
+public interface EasyWebFilterListener {
+	/**
+	 * 
+	 * @param filterContext EasyWebFilterContext
+	 */
+	public void on(final EasyWebFilterContext filterContext);
 }

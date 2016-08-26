@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
+import com.openthinks.easyweb.annotation.process.filter.path.FilterPathMatcher;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.libs.utilities.Checker;
 
