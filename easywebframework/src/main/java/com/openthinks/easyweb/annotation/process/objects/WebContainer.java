@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletContext;
 
-import com.openthinks.easyweb.WebUtils;
+import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.libs.utilities.Checker;
 
 /**
@@ -142,11 +142,8 @@ public class WebContainer implements WebUnit {
 		}
 		WebMethod webMethod = this.filterMapping.get(path);
 		if (webMethod == null) {//if not found, try the closet path
-			final String outerPath = path;
-			Optional<String> closetPath = this.filterMapping.keySet().stream().sorted(WebUtils::comparePathByLongest)
-					.filter((filterPath)->{
-						return	WebUtils.contactPath(outerPath, "/").contains(WebUtils.contactPath(filterPath,"/"));
-					}).findFirst();
+			Optional<String> closetPath = FilterPathMatcher.configDefaultStrategy().findMatch(path,
+					this.filterMapping.keySet());
 			if (closetPath.isPresent()) {
 				webMethod = this.filterMapping.get(closetPath.get());
 			}

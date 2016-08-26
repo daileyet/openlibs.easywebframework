@@ -75,7 +75,7 @@ public class WebProcessMonitor extends HttpServlet {
 			dynamicContent.append("</tr>");
 		}
 		for (WebController controller : controllers) {
-			generateAndAppendRow(dynamicContent, controller);
+			generateAndAppendRow(dynamicContent, controller, true);
 		}
 		if (!filters.isEmpty()) {
 			dynamicContent.append("<tr>");
@@ -83,7 +83,7 @@ public class WebProcessMonitor extends HttpServlet {
 			dynamicContent.append("</tr>");
 		}
 		for (WebFilter filter : filters) {
-			generateAndAppendRow(dynamicContent, filter);
+			generateAndAppendRow(dynamicContent, filter, false);
 		}
 		PrintWriter out = response.getWriter();
 		response.setCharacterEncoding("UTF-8");
@@ -98,7 +98,7 @@ public class WebProcessMonitor extends HttpServlet {
 	 * @param dynamicContent
 	 * @param controller
 	 */
-	protected void generateAndAppendRow(StringBuffer dynamicContent, WebInstancer instancer) {
+	protected void generateAndAppendRow(StringBuffer dynamicContent, WebInstancer instancer, boolean needLink) {
 		dynamicContent.append("<tr>");
 		dynamicContent.append("<td>" + instancer.getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getType().getName() + "</td>");
@@ -108,8 +108,12 @@ public class WebProcessMonitor extends HttpServlet {
 		if (instancer.getSize() > 0) {
 			dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
 			for (WebMethod method : instancer.children()) {
-				dynamicContent.append(
-						"<a class=\"list-group-item\" href=\"" + getLink(method) + "\">" + method.getName() + "</a>");
+				if (needLink)
+					dynamicContent.append("<a class=\"list-group-item\" title=\"" + method.getFullPath() + "\" href=\""
+							+ getLink(method) + "\">" + method.getName() + "</a>");
+				else
+					dynamicContent.append("<span class=\"list-group-item\" title=\"" + method.getFullPath() + "\">"
+							+ method.getName() + "</span>");
 			}
 			dynamicContent.append("</div>");
 		} else {

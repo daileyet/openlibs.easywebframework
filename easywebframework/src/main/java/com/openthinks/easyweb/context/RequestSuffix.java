@@ -10,14 +10,17 @@ import java.util.Set;
  *
  */
 public class RequestSuffix {
-	private final Set<String> suffixes = new HashSet<String>();
+	private final Set<String> suffixes = new HashSet<>();
 	/**
 	 * the split token between multiple suffix
 	 */
 	public final static String SUFFIX_MULTI_SPLIT = ",";
 
 	public static RequestSuffix build(String suffixStr) {
-		String[] suffixArray = suffixStr.split(SUFFIX_MULTI_SPLIT);
+		String[] suffixArray = new String[0];
+		if (suffixStr != null) {
+			suffixArray = suffixStr.split(SUFFIX_MULTI_SPLIT);
+		}
 		RequestSuffix rs = new RequestSuffix();
 		for (String suffix : suffixArray) {
 			if (suffix != null && !"".equals(suffix.trim())) {
@@ -39,6 +42,10 @@ public class RequestSuffix {
 
 	public String[] options() {
 		return suffixes.toArray(new String[0]);
+	}
+
+	public boolean isEmpty() {
+		return suffixes.isEmpty();
 	}
 
 	@Override
