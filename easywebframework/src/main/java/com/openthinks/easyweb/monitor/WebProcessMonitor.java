@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.openthinks.easyweb.WebStatic;
+import com.openthinks.easyweb.WebUtils;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebController;
@@ -82,7 +83,7 @@ public class WebProcessMonitor extends HttpServlet {
 	}
 
 	private boolean isLocalAddress(HttpServletRequest request) {
-		String host = request.getRemoteHost();
+		String host = WebUtils.getRemoteIP(request);
 		boolean isLocal = false;
 		try {
 			InetAddress inetAddress = InetAddress.getByName(host);
