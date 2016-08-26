@@ -41,7 +41,7 @@ import com.openthinks.libs.utilities.version.VersionCenter;
  * @author dailey.yet@outlook.com
  *
  */
-@AppVersion("1.1")
+@AppVersion("1.2")
 public class Versions extends VersionCenter {
 
 	/**

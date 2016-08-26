@@ -39,11 +39,11 @@ id="EasywebFramework" version="3.0">
     <url-pattern>/monitor/*</url-pattern>
   </servlet-mapping>
   <filter>
-  	<filter-name>EasyWebFilter</filter-name>
+  	<filter-name>easyweb_filter</filter-name>
   	<filter-class>com.openthinks.easyweb.EasyWebFilter</filter-class>
   </filter>
   <filter-mapping>
-  	<filter-name>EasyWebFilter</filter-name>
+  	<filter-name>easyweb_filter</filter-name>
   	<servlet-name>easyweb</servlet-name>
   </filter-mapping>
   <listener>

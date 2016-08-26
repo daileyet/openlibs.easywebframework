@@ -69,6 +69,14 @@ public final class EasyWebFilterContexts {
 		return filterCtx;
 	}
 
+	/**
+	 * get context for default filter {@link EasyWebFilter} 
+	 * @return EasyWebFilterContext
+	 */
+	public static EasyWebFilterContext get() {
+		return get(EasyWebFilter.class);
+	}
+
 	static class EasyWebFilterContextImpl implements EasyWebFilterContext {
 		private FilterConfig filterConfig;
 		private final List<EasyWebFilterListener> easyWebFilterInitListeners = Collections
