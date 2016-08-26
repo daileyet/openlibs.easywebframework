@@ -50,12 +50,25 @@ public final class WebStatic {
 	 * also can the attribute name of main servlet or init parameter of this main servlet
 	 * 	<pre>
 	 *	&lt;context-param>
-	 *	&lt;param-name>easyweb-class-dir&lt;/param-name>
-	 *	&lt;param-value>R:\to\path\target\classes&lt;/param-value>
+	 *	&nbsp;&nbsp;&lt;param-name>easywebClassDir&lt;/param-name>
+	 *	&nbsp;&nbsp;&lt;param-value>R:\to\path\target\classes&lt;/param-value>
 	 *	&lt;/context-param>
 	 *  </pre>
 	 */
-	public static final String WEB_CLASS_DIR = "easyweb-class-dir";
+	public static final String WEB_CLASS_DIR = "easywebClassDir";
+	public static final String WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE = "enableRemote";
+	public static final String WEB_CONFIGURE_FILE_LOCATION = "configureLocation";
+	/**
+	 * EasyWeb application configure class<BR>
+	 * 	<pre>
+	 *	&lt;context-param>
+	 *	&nbsp;&nbsp;&lt;param-name>configureClassName&lt;/param-name>
+	 *	&nbsp;&nbsp;&lt;param-value>com.openthinks.easyweb.test.EasyWebConfigure&lt;/param-value>
+	 *	&lt;/context-param>
+	 *  </pre>
+	 */
+	public static final String WEB_CONFIGURE_CLASS_NAME = "configureClassName";
+	//
 	public static final String WEB_REDIRECT_PATH_REFIX = "@REDIRECT::";
 	public static final String WEB_FILTER_PASS_PATH_REFIX = "@FILTER::PASS::";
 	public static final String WEB_FILTER_STOP_PATH_REFIX = "@FILTER::STOP::";;
