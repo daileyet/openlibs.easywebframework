@@ -24,6 +24,7 @@ import com.openthinks.easyweb.annotation.process.objects.WebInstancer;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.easyweb.context.WebContexts;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Servlet implementation class WebProcessMonitor<BR>
@@ -38,6 +39,7 @@ public class WebProcessMonitor extends HttpServlet {
 	public static final String TEMPLATE_CONFIG_ERROR_PAGE_NAME = "TEMPLATE_ERROR_PAGE_NAME";
 	public static final String TEMPLATE_CONFIG_FILE_NAME = "TEMPLATE_CSS_FILE_NAME";
 	private Properties templateConfig = new Properties();
+	private String remoteEnable = "false";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,6 +54,17 @@ public class WebProcessMonitor extends HttpServlet {
 		}
 	}
 
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		try {
+			remoteEnable = this.getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+			calculateAndGetEnable();
+		} catch (Exception e) {
+			ProcessLogger.warn(e);
+		}
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -60,15 +73,36 @@ public class WebProcessMonitor extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean enable = false;
-		String remoteEnable = getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
-		if (remoteEnable != null) {
-			enable = Boolean.valueOf(remoteEnable);
-		}
+		/**
+		 * add ability to overrider this feature switch
+		 */
+		enable = calculateAndGetEnable();
 		if (!enable && !isLocalAddress(request)) {
 			generateErrorPage(request, response);
 		} else {
 			generatePage(request, response);
 		}
+	}
+
+	/**
+	 * @param request
+	 * @param enable
+	 * @return
+	 */
+	protected boolean calculateAndGetEnable() {
+		boolean enable = false;
+		//firstly, check application attribute 
+		String remoteEnable_ = (String) WebContexts.getServletContext()
+				.getAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		if (remoteEnable_ == null) {//secondly, check this servlet init parameter
+			remoteEnable_ = remoteEnable;
+			//write back to application attribute
+			WebContexts.getServletContext().setAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE, remoteEnable_);
+		}
+		if (remoteEnable_ != null) {
+			enable = Boolean.valueOf(remoteEnable_);
+		}
+		return enable;
 	}
 
 	private void generateErrorPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -95,7 +129,7 @@ public class WebProcessMonitor extends HttpServlet {
 	}
 
 	/**
-	 * @throws IOException 
+	 * @throws IOException
 	 * 
 	 */
 	protected void generatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -140,7 +174,8 @@ public class WebProcessMonitor extends HttpServlet {
 		dynamicContent.append("<td>" + instancer.getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getType().getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getFullPath() + "</td>");
-		//dynamicContent.append("<td>" + instancer.getRelativePath() + "</td>");
+		// dynamicContent.append("<td>" + instancer.getRelativePath() +
+		// "</td>");
 		dynamicContent.append("<td style=\"padding: 0\">");
 		if (instancer.getSize() > 0) {
 			dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
@@ -150,7 +185,7 @@ public class WebProcessMonitor extends HttpServlet {
 							+ getLink(method) + "\">" + method.getName() + "</a>");
 				else
 					dynamicContent.append("<span class=\"list-group-item\" title=\"" + method.getFullPath() + "\">"
-							+ method.getName() + "</span>");
+							+ method.getRelativePath() + "</span>");
 			}
 			dynamicContent.append("</div>");
 		} else {

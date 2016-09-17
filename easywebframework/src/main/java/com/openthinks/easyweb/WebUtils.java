@@ -11,6 +11,7 @@ import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.easyweb.context.WebContexts;
+import com.openthinks.easyweb.monitor.WebProcessMonitor;
 import com.openthinks.libs.utilities.Checker;
 
 /**
@@ -49,7 +50,7 @@ public final class WebUtils {
 	public static String filterPass() {
 		return WebStatic.WEB_FILTER_PASS_PATH_REFIX;
 	}
-	
+
 	public static String filterStop() {
 		return WebStatic.WEB_FILTER_STOP_PATH_REFIX;
 	}
@@ -298,4 +299,17 @@ public final class WebUtils {
 		return getPackPath(pack, WebContexts.getServletContext());
 	}
 
+	/**
+	 * check {@link WebProcessMonitor} enable remote access or not 
+	 * @return boolean
+	 */
+	public static boolean isEnableRemoteMonitor() {
+		boolean enable = false;
+		String remoteEnable = (String) WebContexts.getServletContext()
+				.getAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		if (remoteEnable != null) {
+			enable = Boolean.valueOf(remoteEnable);
+		}
+		return enable;
+	}
 }
