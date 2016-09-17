@@ -60,7 +60,14 @@ public class WebProcessMonitor extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean enable = false;
-		String remoteEnable = getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		/**
+		 * add ability to overrider this feature switch
+		 */
+		String remoteEnable = (String) request.getServletContext()
+				.getAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		if (remoteEnable == null) {
+			remoteEnable = getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		}
 		if (remoteEnable != null) {
 			enable = Boolean.valueOf(remoteEnable);
 		}
@@ -95,7 +102,7 @@ public class WebProcessMonitor extends HttpServlet {
 	}
 
 	/**
-	 * @throws IOException 
+	 * @throws IOException
 	 * 
 	 */
 	protected void generatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -140,7 +147,8 @@ public class WebProcessMonitor extends HttpServlet {
 		dynamicContent.append("<td>" + instancer.getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getType().getName() + "</td>");
 		dynamicContent.append("<td>" + instancer.getFullPath() + "</td>");
-		//dynamicContent.append("<td>" + instancer.getRelativePath() + "</td>");
+		// dynamicContent.append("<td>" + instancer.getRelativePath() +
+		// "</td>");
 		dynamicContent.append("<td style=\"padding: 0\">");
 		if (instancer.getSize() > 0) {
 			dynamicContent.append("<div class=\"list-group\" style=\"margin: 0\">");
