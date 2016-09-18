@@ -24,6 +24,7 @@ import com.openthinks.easyweb.annotation.process.objects.WebInstancer;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.easyweb.context.WebContexts;
+import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
  * Servlet implementation class WebProcessMonitor<BR>
@@ -38,6 +39,7 @@ public class WebProcessMonitor extends HttpServlet {
 	public static final String TEMPLATE_CONFIG_ERROR_PAGE_NAME = "TEMPLATE_ERROR_PAGE_NAME";
 	public static final String TEMPLATE_CONFIG_FILE_NAME = "TEMPLATE_CSS_FILE_NAME";
 	private Properties templateConfig = new Properties();
+	private String remoteEnable = "false";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -52,6 +54,17 @@ public class WebProcessMonitor extends HttpServlet {
 		}
 	}
 
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		try {
+			remoteEnable = this.getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+			calculateAndGetEnable();
+		} catch (Exception e) {
+			ProcessLogger.warn(e);
+		}
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -63,19 +76,37 @@ public class WebProcessMonitor extends HttpServlet {
 		/**
 		 * add ability to overrider this feature switch
 		 */
-		String remoteEnable = (String) request.getServletContext()
-				.getAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
-		if (remoteEnable == null) {
-			remoteEnable = getInitParameter(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
-		}
-		if (remoteEnable != null) {
-			enable = Boolean.valueOf(remoteEnable);
-		}
+		enable = calculateAndGetEnable();
 		if (!enable && !isLocalAddress(request)) {
 			generateErrorPage(request, response);
 		} else {
 			generatePage(request, response);
 		}
+	}
+
+	/**
+	 * @param request
+	 * @param enable
+	 * @return
+	 */
+	protected boolean calculateAndGetEnable() {
+		boolean enable = false;
+		//firstly, check application attribute 
+		String remoteEnable_ = (String) WebContexts.getServletContext()
+				.getAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
+		ProcessLogger.debug(
+				"Get Monitor parameter[" + WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE + "] = " + remoteEnable_);
+		if (remoteEnable_ == null) {//secondly, check this servlet init parameter
+			remoteEnable_ = remoteEnable;
+			ProcessLogger.debug("Get Monitor init parameter[" + WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE + "] = "
+					+ remoteEnable_);
+			//write back to application attribute
+			WebContexts.getServletContext().setAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE, remoteEnable_);
+		}
+		if (remoteEnable_ != null) {
+			enable = Boolean.valueOf(remoteEnable_);
+		}
+		return enable;
 	}
 
 	private void generateErrorPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
