@@ -94,12 +94,8 @@ public class WebProcessMonitor extends HttpServlet {
 		//firstly, check application attribute 
 		String remoteEnable_ = (String) WebContexts.getServletContext()
 				.getAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE);
-		ProcessLogger.debug(
-				"Get Monitor parameter[" + WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE + "] = " + remoteEnable_);
 		if (remoteEnable_ == null) {//secondly, check this servlet init parameter
 			remoteEnable_ = remoteEnable;
-			ProcessLogger.debug("Get Monitor init parameter[" + WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE + "] = "
-					+ remoteEnable_);
 			//write back to application attribute
 			WebContexts.getServletContext().setAttribute(WebStatic.WEB_MONITOR_INIT_PARAM_ENABLE_REMOTE, remoteEnable_);
 		}
