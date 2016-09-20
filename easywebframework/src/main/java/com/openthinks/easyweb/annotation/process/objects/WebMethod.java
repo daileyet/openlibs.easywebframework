@@ -56,7 +56,7 @@ public class WebMethod implements WebUnit {
 
 	@Override
 	public String getName() {
-		return getRelativePath();
+		return method.getName();
 	}
 
 	@Override

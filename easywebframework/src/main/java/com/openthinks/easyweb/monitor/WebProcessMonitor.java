@@ -185,7 +185,7 @@ public class WebProcessMonitor extends HttpServlet {
 							+ getLink(method) + "\">" + method.getName() + "</a>");
 				else
 					dynamicContent.append("<span class=\"list-group-item\" title=\"" + method.getFullPath() + "\">"
-							+ method.getName() + "</span>");
+							+ method.getRelativePath() + "</span>");
 			}
 			dynamicContent.append("</div>");
 		} else {
