@@ -59,21 +59,21 @@ public final class WebUtils {
 
 	/**
 	 * get easyweb controller method mapping full path
-	 * @param subpath String Web method path
+	 * @param subpath String Web method path, not include root context path 
 	 * @return String which as {@link HttpServletRequest#getRequestURI()}
 	 */
 	public static String path(String subpath) {
 		String relSubpath = getRequestURI(subpath);
-		return WebContexts.getServletContext().getContextPath() + relSubpath;
+		return getFullRequestMapingPath(relSubpath) ;
 	}
 
 	/**
 	 * get static web resource full path
-	 * @param staticPath String not easyweb method path
+	 * @param staticPath String not easyweb method path, also not include root context path 
 	 * @return String static web resource full path
 	 */
 	public static String pathS(String staticPath) {
-		return WebContexts.getServletContext().getContextPath() + staticPath;
+		return getFullRequestMapingPath(staticPath);
 	}
 
 	/**
@@ -235,7 +235,7 @@ public final class WebUtils {
 	 * @return String
 	 */
 	public static String getFullRequestMapingPath(String requestShortMappingPath) {
-		String contextPath = WebContexts.get().getWebContainer().getRelativePath(),
+		String contextPath = WebContexts.getServletContext().getContextPath(),
 				requestFullMapingPath = requestShortMappingPath;
 		if (!requestShortMappingPath.startsWith(contextPath)) {// BUG on SAE, need full path
 			requestFullMapingPath = contactPath(contextPath, requestShortMappingPath);
