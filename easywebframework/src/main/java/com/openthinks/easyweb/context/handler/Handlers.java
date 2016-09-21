@@ -25,8 +25,7 @@ public class Handlers {
 	 */
 	public static WebHandler getHandler(HttpServletRequest req, ServletContext servletContext) {
 		String path = req.getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path,
-				WebContexts.get().getWebConfigure().getRequestSuffix());
+		String mappingPath = WebUtils.getRequestMapingPath(path);
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
 		WebMethodResponse methodResponse = null;
@@ -44,8 +43,7 @@ public class Handlers {
 	 */
 	public static FilterHandler getFilterHandler(ServletRequest request, ServletContext servletContext) {
 		String path = ((HttpServletRequest) request).getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path,
-				WebContexts.get().getWebConfigure().getRequestSuffix());
+		String mappingPath = WebUtils.getRequestMapingPath(path);
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookupFilter(mappingPath);
 		WebMethodResponse methodResponse = null;

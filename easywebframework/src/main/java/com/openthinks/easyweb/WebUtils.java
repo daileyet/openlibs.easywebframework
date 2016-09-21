@@ -8,6 +8,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
+import com.openthinks.easyweb.annotation.process.objects.WebController;
+import com.openthinks.easyweb.annotation.process.objects.WebFilter;
 import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.easyweb.context.WebContexts;
@@ -58,49 +60,62 @@ public final class WebUtils {
 	/**
 	 * get easyweb controller method mapping full path
 	 * @param subpath String Web method path
-	 * @return
+	 * @return String which as {@link HttpServletRequest#getRequestURI()}
 	 */
 	public static String path(String subpath) {
-		String relSubpath = convertToRequestURI(subpath, WebContexts.get().getWebConfigure().getRequestSuffix());
+		String relSubpath = getRequestURI(subpath);
 		return WebContexts.getServletContext().getContextPath() + relSubpath;
 	}
 
 	/**
 	 * get static web resource full path
-	 * @param staticPath
-	 * @return
+	 * @param staticPath String not easyweb method path
+	 * @return String static web resource full path
 	 */
 	public static String pathS(String staticPath) {
 		return WebContexts.getServletContext().getContextPath() + staticPath;
 	}
 
 	/**
-	 * get the instance of {@link WebMethod} by the {@link HttpServletRequest}
-	 * @param req HttpServletRequest
-	 * @return WebMethod
+	 * get the instance of {@link WebMethod} by the {@link HttpServletRequest};
+	 * first try to find in {@link WebController} scope, if not found will try to find in {@link WebFilter} scope
+	 * @see WebUtils#getControllerWebMethod(HttpServletRequest)
+	 * @see WebUtils#getFilterWebMethod(ServletRequest)
+	 * @param req {@link HttpServletRequest}
+	 * @return {@link WebMethod} or null
 	 */
 	public static WebMethod getWebMethod(HttpServletRequest req) {
 		String path = req.getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path,
-				WebContexts.get().getWebConfigure().getRequestSuffix());
+		String mappingPath = getRequestMapingPath(path);
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
+		if (webMethod == null) {
+			webMethod = container.lookupFilter(mappingPath);
+		}
 		return webMethod;
 	}
 
+	/**
+	 * get the instance of {@link WebMethod} which belong to {@link WebController} by the {@link HttpServletRequest}
+	 * @param req {@link HttpServletRequest}
+	 * @return {@link WebMethod} or null
+	 */
 	public static WebMethod getControllerWebMethod(HttpServletRequest req) {
 		String path = req.getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path,
-				WebContexts.get().getWebConfigure().getRequestSuffix());
+		String mappingPath = getRequestMapingPath(path);
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookup(mappingPath);
 		return webMethod;
 	}
 
+	/**
+	 * get the instance of {@link WebMethod} which belong to {@link WebFilter} by the {@link HttpServletRequest}
+	 * @param req {@link HttpServletRequest}
+	 * @return {@link WebMethod} or null
+	 */
 	public static WebMethod getFilterWebMethod(ServletRequest req) {
 		String path = ((HttpServletRequest) req).getRequestURI();
-		String mappingPath = WebUtils.convertToRequestMapingPath(path,
-				WebContexts.get().getWebConfigure().getRequestSuffix());
+		String mappingPath = getRequestMapingPath(path);
 		WebContainer container = WebContexts.get().getWebContainer();
 		WebMethod webMethod = container.lookupFilter(mappingPath);
 		return webMethod;
@@ -201,14 +216,34 @@ public final class WebUtils {
 	}
 
 	/**
+	 * get the EasyWeb controller method path
+	 * @see WebUtils#convertToRequestMapingPath(String, RequestSuffix)
+	 * @param requestURI String {@link HttpServletRequest#getRequestURI()}
+	 * @return String the EasyWeb controller method path
+	 */
+	public static String getRequestMapingPath(String requestURI) {
+		return convertToRequestMapingPath(requestURI, WebContexts.get().getWebConfigure().getRequestSuffix());
+	}
+
+	/**
 	 * get the full URL path by the EasyWeb controller method path
 	 * @param requestMappingPath String
 	 * @param suffix {@link RequestSuffix}
-	 * @return String
+	 * @return String String HTTP request full URL path
 	 */
 	public static String convertToRequestURI(String requestMappingPath, RequestSuffix suffix) {
 		String requestURI = requestMappingPath + suffix.options()[0];
 		return requestURI;
+	}
+
+	/**
+	 * get the full URL path by the EasyWeb controller method path
+	 * @see WebUtils#convertToRequestURI(String, RequestSuffix)
+	 * @param requestMappingPath String the EasyWeb controller method path
+	 * @return String HTTP request full URL path
+	 */
+	public static String getRequestURI(String requestMappingPath) {
+		return convertToRequestURI(requestMappingPath, WebContexts.get().getWebConfigure().getRequestSuffix());
 	}
 
 	public static String getRemoteIP(HttpServletRequest request) {

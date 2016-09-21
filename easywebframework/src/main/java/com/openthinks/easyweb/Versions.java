@@ -27,6 +27,10 @@ import com.openthinks.easyweb.annotation.AutoComponent;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.Filter;
 import com.openthinks.easyweb.annotation.Jsonp;
+import com.openthinks.easyweb.annotation.process.filter.path.FilterPathMatchStrategy;
+import com.openthinks.easyweb.annotation.process.filter.path.MixedFilterPathMatchStrategy;
+import com.openthinks.easyweb.annotation.process.filter.path.RegExrFilterPathMatchStrategy;
+import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebController;
 import com.openthinks.easyweb.annotation.process.objects.WebFilter;
 import com.openthinks.easyweb.context.EasyWebFilterContext;
@@ -53,7 +57,9 @@ public class Versions extends VersionCenter {
 	 * 			<li> Add interface {@link FilterHandler}
 	 * 			<li> Add {@link WebFilter} which like {@link WebController}
 	 * 			<li> Add {@link EasyWebFilterContext} to reference {@link EasyWebFilter}
-	 * 			<li> Add "enableRemote" option for {@link WebProcessMonitor}, 
+	 * 			<li> Add "enableRemote" option for {@link WebProcessMonitor} 
+	 * 			<li> Add {@link FilterPathMatchStrategy} for {@link WebContainer#lookupFilter(String)}
+	 * 			<li> Add {@link RegExrFilterPathMatchStrategy},{@link MixedFilterPathMatchStrategy}
 	 * 		</ol>
 	 * </ul>
 	 */

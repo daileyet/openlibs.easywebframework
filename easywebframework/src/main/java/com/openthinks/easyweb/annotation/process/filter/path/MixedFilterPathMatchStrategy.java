@@ -16,11 +16,11 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-* @Title: FilterPathMatchStrategy.java 
-* @Package com.openthinks.easyweb.annotation.process.objects 
+* @Title: MixedFilterPathMatchStrategy.java 
+* @Package com.openthinks.easyweb.annotation.process.filter.path 
 * @Description: TODO
 * @author dailey.yet@outlook.com  
-* @date Aug 26, 2016
+* @date Sep 21, 2016
 * @version V1.0   
 */
 package com.openthinks.easyweb.annotation.process.filter.path;
@@ -29,25 +29,20 @@ import java.util.Optional;
 import java.util.Set;
 
 import com.openthinks.easyweb.annotation.process.filter.path.FilterPathMatcher.SimpleFilterPathMatchStrategy;
-import com.openthinks.easyweb.annotation.process.objects.WebFilter;
-import com.openthinks.easyweb.context.RequestSuffix;
 
 /**
- * Strategy for {@link WebFilter} path
+ * Mixed {@link RegExrFilterPathMatchStrategy} and {@link SimpleFilterPathMatchStrategy}
  * @author dailey.yet@outlook.com
- * @date 2016/8/26
+ *
  */
-public interface FilterPathMatchStrategy {
-
-	/**
-	 * find the match filter path
-	 * @param originalPath String request URI without {@link RequestSuffix} etc. /web/test/index
-	 * @param filterPaths Set<T> registered filter path
-	 * @param <T> String
-	 * @see SimpleFilterPathMatchStrategy
-	 * @see RegExrFilterPathMatchStrategy
-	 * @return Optional<T>
-	 */
-	Optional<String> findMatch(String originalPath, Set<String> filterPaths);
+public class MixedFilterPathMatchStrategy extends RegExrFilterPathMatchStrategy {
+	@Override
+	public Optional<String> findMatch(String originalPath, Set<String> filterPaths) {
+		Optional<String> matcher = super.findMatch(originalPath, filterPaths);
+		if (!matcher.isPresent()) {
+			matcher = FilterPathMatcher.SIMPLE.findMatch(originalPath, filterPaths);
+		}
+		return matcher;
+	}
 
 }

@@ -118,32 +118,32 @@ public class WebContainer implements WebUnit {
 	 * find {@link WebMethod} by controllerMapping path which equals {@link
 	 * WebMethod.getFullPath()}
 	 * 
-	 * @param path
+	 * @param requestMapingPath
 	 *            String request mapping path without {@link RequestSuffix} etc. /web/test/index
 	 * @return WebMethod
 	 */
-	public WebMethod lookup(String path) {
-		Checker.require(path).notNull();
-		if (!path.startsWith(getRelativePath())) {// BUG on SAE, need full path
-			path = getRelativePath() + path;
+	public WebMethod lookup(String requestMapingPath) {
+		Checker.require(requestMapingPath).notNull();
+		if (!requestMapingPath.startsWith(getRelativePath())) {// BUG on SAE, need full path
+			requestMapingPath = getRelativePath() + requestMapingPath;
 		}
-		return this.controllerMapping.get(path);
+		return this.controllerMapping.get(requestMapingPath);
 	}
 
 	/**
 	 * find {@link WebMethod} by filterMapping path which equals {@link
 	 * WebMethod.getFullPath()}
-	 * @param path String request mapping path without {@link RequestSuffix} etc. /web/test/index
+	 * @param requestMapingPath String request mapping path without {@link RequestSuffix} etc. /web/test/index
 	 * @return WebMethod
 	 */
-	public WebMethod lookupFilter(String path) {
-		Checker.require(path).notNull();
-		if (!path.startsWith(getRelativePath())) {// BUG on SAE, need full path
-			path = getRelativePath() + path;
+	public WebMethod lookupFilter(String requestMapingPath) {
+		Checker.require(requestMapingPath).notNull();
+		if (!requestMapingPath.startsWith(getRelativePath())) {// BUG on SAE, need full path
+			requestMapingPath = getRelativePath() + requestMapingPath;
 		}
-		WebMethod webMethod = this.filterMapping.get(path);
+		WebMethod webMethod = this.filterMapping.get(requestMapingPath);
 		if (webMethod == null) {//if not found, try the closet path
-			Optional<String> closetPath = FilterPathMatcher.configDefaultStrategy().findMatch(path,
+			Optional<String> closetPath = FilterPathMatcher.configDefaultStrategy().findMatch(requestMapingPath,
 					this.filterMapping.keySet());
 			if (closetPath.isPresent()) {
 				webMethod = this.filterMapping.get(closetPath.get());
