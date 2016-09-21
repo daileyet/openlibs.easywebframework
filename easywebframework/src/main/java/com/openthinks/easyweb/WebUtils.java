@@ -226,6 +226,24 @@ public final class WebUtils {
 	}
 
 	/**
+	 * get full request mapping path with context path; <BR>
+	 * for example:<BR>
+	 * root context path is : /easywebtest<BR>
+	 * request short mapping path is : /hello/index<BR>
+	 * then the finally full request mapping path is : /easywebtest/hello/index
+	 * @param requestShortMappingPath String
+	 * @return String
+	 */
+	public static String getFullRequestMapingPath(String requestShortMappingPath) {
+		String contextPath = WebContexts.get().getWebContainer().getRelativePath(),
+				requestFullMapingPath = requestShortMappingPath;
+		if (!requestShortMappingPath.startsWith(contextPath)) {// BUG on SAE, need full path
+			requestFullMapingPath = contactPath(contextPath, requestShortMappingPath);
+		}
+		return requestFullMapingPath;
+	}
+
+	/**
 	 * get the full URL path by the EasyWeb controller method path
 	 * @param requestMappingPath String
 	 * @param suffix {@link RequestSuffix}
