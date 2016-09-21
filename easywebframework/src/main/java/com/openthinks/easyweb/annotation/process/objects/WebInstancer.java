@@ -144,4 +144,5 @@ public abstract class WebInstancer implements WebUnit {
 	public Class<?> getType() {
 		return type;
 	}
+
 }

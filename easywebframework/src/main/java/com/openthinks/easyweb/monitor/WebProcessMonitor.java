@@ -182,7 +182,7 @@ public class WebProcessMonitor extends HttpServlet {
 			for (WebMethod method : instancer.children()) {
 				if (needLink)
 					dynamicContent.append("<a class=\"list-group-item\" title=\"" + method.getFullPath() + "\" href=\""
-							+ getLink(method) + "\">" + method.getName() + "</a>");
+							+ getLink(method) + "\">" + method.getRelativePath() + "</a>");
 				else
 					dynamicContent.append("<span class=\"list-group-item\" title=\"" + method.getFullPath() + "\">"
 							+ method.getRelativePath() + "</span>");

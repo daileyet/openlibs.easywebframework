@@ -38,15 +38,18 @@ import com.openthinks.easyweb.context.WebContexts;
  * @date 2016/8/26
  */
 public final class FilterPathMatcher {
+	public static final FilterPathMatchStrategy REGEXR = new RegExrFilterPathMatchStrategy();
+	public static final FilterPathMatchStrategy SIMPLE = new SimpleFilterPathMatchStrategy();
+	public static final FilterPathMatchStrategy MIXED = new MixedFilterPathMatchStrategy();
 	private FilterPathMatchStrategy strategy = null;
 
 	public static FilterPathMatcher configDefaultStrategy() {
 		FilterPathMatcher filterPathMatcher = new FilterPathMatcher();
-		filterPathMatcher.strategy = new DefaultFilterPathMatchStrategy();
+		filterPathMatcher.strategy = MIXED;
 		return filterPathMatcher;
 	}
 
-	public static FilterPathMatcher configStrategy(FilterPathMatchStrategy strategy) {
+	public static FilterPathMatcher configStrategy(final FilterPathMatchStrategy strategy) {
 		FilterPathMatcher filterPathMatcher = new FilterPathMatcher();
 		filterPathMatcher.strategy = strategy;
 		return filterPathMatcher;
@@ -54,11 +57,11 @@ public final class FilterPathMatcher {
 
 	/**
 	 * 
-	 * default {@link FilterPathMatchStrategy} implementation;<BR>
+	 * simple {@link FilterPathMatchStrategy} implementation;<BR>
 	 * <li>firstly sort parameter filterPaths by {@link WebUtils#comparePathByLongest(String, String)}
 	 * <li>process {@link Predicate&lt;String&gt;} and do special when {@link RequestSuffix} not empty in {@link WebConfigure}
 	 */
-	static class DefaultFilterPathMatchStrategy implements FilterPathMatchStrategy {
+	static class SimpleFilterPathMatchStrategy implements FilterPathMatchStrategy {
 
 		@Override
 		public Optional<String> findMatch(String originalPath, Set<String> filterPaths) {
@@ -81,6 +84,13 @@ public final class FilterPathMatcher {
 
 	}
 
+	/**
+	 * @see FilterPathMatchStrategy#findMatch(String, Set)
+	 * @param originalPath String
+	 * @param filterPaths Set<T>
+	 * @param <T> String
+	 * @return Optional<T>
+	 */
 	public Optional<String> findMatch(String originalPath, Set<String> filterPaths) {
 		if (this.strategy == null) {
 			return Optional.empty();
