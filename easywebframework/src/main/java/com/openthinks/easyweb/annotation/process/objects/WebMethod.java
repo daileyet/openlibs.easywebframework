@@ -38,6 +38,14 @@ public class WebMethod implements WebUnit {
 	public String getRelativePath() {
 		return mapping.value();
 	}
+	
+	/**
+	 * get relative path include parent {@link WebInstancer#getRelativePath()}
+	 * @return String
+	 */
+	public String getRelativePath2(){
+		return WebUtils.contactPath(parent().getRelativePath(), this.getRelativePath());
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

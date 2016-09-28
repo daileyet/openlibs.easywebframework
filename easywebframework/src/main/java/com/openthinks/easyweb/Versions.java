@@ -23,6 +23,8 @@
 */
 package com.openthinks.easyweb;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.openthinks.easyweb.annotation.AutoComponent;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.Filter;
@@ -33,6 +35,7 @@ import com.openthinks.easyweb.annotation.process.filter.path.RegExrFilterPathMat
 import com.openthinks.easyweb.annotation.process.objects.WebContainer;
 import com.openthinks.easyweb.annotation.process.objects.WebController;
 import com.openthinks.easyweb.annotation.process.objects.WebFilter;
+import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 import com.openthinks.easyweb.context.EasyWebFilterContext;
 import com.openthinks.easyweb.context.handler.FilterHandler;
 import com.openthinks.easyweb.context.handler.StringMappingWebHandler;
@@ -81,6 +84,12 @@ public class Versions extends VersionCenter {
 	String v_1_1;
 	/**
 	 * @base
+	 * <dl>
+	 * <dt>request mapping path</dt><dd>the path which mapping to {@link WebMethod}, also equals to {@link WebMethod#getFullPath()}</dd>
+	 * <dt>full request mapping path</dt><dd>the path which mapping to {@link WebMethod} and it include web context root path, equals to {@link WebMethod#getFullPath()}</dd>
+	 * <dt>short request mapping path</dt><dd>the path which mapping to {@link WebMethod} and it not include web context root path, equals to {@link WebMethod#getRelativePath2()}</dd>
+	 * <dt>request URI</dt><dd>equals to {@link HttpServletRequest#getRequestURI()}</dd>
+	 * </dl>
 	 */
 	String v_1_0;
 }
