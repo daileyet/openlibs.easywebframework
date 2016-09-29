@@ -1,0 +1,3 @@
+TEMPLATE_PAGE_NAME=monitor.template.html
+TEMPLATE_ERROR_PAGE_NAME=monitor.error.template.html
+TEMPLATE_CSS_FILE_NAME=bootstrap.min.css
