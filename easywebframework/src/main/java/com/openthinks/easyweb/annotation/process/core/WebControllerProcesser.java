@@ -11,7 +11,7 @@ import com.openthinks.easyweb.annotation.process.objects.WebMethod;
  * Web controller processor
  * @author dailey.yet@outlook.com
  */
-class WebControllerProcesser extends AbstractProcesser<WebController> {
+public class WebControllerProcesser extends AbstractProcesser<WebController> {
 	@Override
 	public WebController process() {
 		Object instance = this.getPropertie(WebStatic.WEB_CONTROLLER);

@@ -3,6 +3,7 @@
  */
 package com.openthinks.easyweb.context.parser;
 
+import com.openthinks.easyweb.annotation.configure.ScanWay.ScanWayEnum;
 import com.openthinks.easyweb.context.Bootstrap;
 
 /**
@@ -43,6 +44,11 @@ public class WebConfigureFileParser implements ConfigureParser {
 	public Bootstrap bootstarp() {
 
 		return null;
+	}
+
+	@Override
+	public ScanWayEnum getScanWay() {
+		return ScanWayEnum.FILE_PATH;
 	}
 
 }

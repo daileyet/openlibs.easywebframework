@@ -4,6 +4,8 @@ import com.openthinks.easyweb.annotation.configure.BootstrapClass;
 import com.openthinks.easyweb.annotation.configure.EasyConfigure;
 import com.openthinks.easyweb.annotation.configure.RequestSuffixs;
 import com.openthinks.easyweb.annotation.configure.ScanPackages;
+import com.openthinks.easyweb.annotation.configure.ScanWay;
+import com.openthinks.easyweb.annotation.configure.ScanWay.ScanWayEnum;
 import com.openthinks.easyweb.context.Bootstrap;
 import com.openthinks.easyweb.context.NullBootstrap;
 import com.openthinks.libs.utilities.InstanceUtilities;
@@ -57,6 +59,15 @@ public class WebConfigureAnnoationParser implements ConfigureParser {
 			return bootObj;
 		}
 		return new NullBootstrap();
+	}
+
+	@Override
+	public ScanWayEnum getScanWay() {
+		ScanWay scanWay = configureClass.getAnnotation(ScanWay.class);
+		if (scanWay == null) {
+			return ScanWayEnum.FILE_PATH;
+		}
+		return scanWay.value();
 	}
 
 }

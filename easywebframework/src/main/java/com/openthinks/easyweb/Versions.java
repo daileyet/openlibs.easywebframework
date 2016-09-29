@@ -29,6 +29,8 @@ import com.openthinks.easyweb.annotation.AutoComponent;
 import com.openthinks.easyweb.annotation.Controller;
 import com.openthinks.easyweb.annotation.Filter;
 import com.openthinks.easyweb.annotation.Jsonp;
+import com.openthinks.easyweb.annotation.configure.ScanWay;
+import com.openthinks.easyweb.annotation.process.core.scaner.PackageScanner;
 import com.openthinks.easyweb.annotation.process.filter.path.FilterPathMatchStrategy;
 import com.openthinks.easyweb.annotation.process.filter.path.MixedFilterPathMatchStrategy;
 import com.openthinks.easyweb.annotation.process.filter.path.RegExrFilterPathMatchStrategy;
@@ -63,6 +65,7 @@ public class Versions extends VersionCenter {
 	 * 			<li> Add "enableRemote" option for {@link WebProcessMonitor} 
 	 * 			<li> Add {@link FilterPathMatchStrategy} for {@link WebContainer#lookupFilter(String)}
 	 * 			<li> Add {@link RegExrFilterPathMatchStrategy},{@link MixedFilterPathMatchStrategy}
+	 * 			<li> Add {@link ScanWay},{@link PackageScanner} and its two implementations; make framework support scan package from jar file
 	 * 		</ol>
 	 * </ul>
 	 */

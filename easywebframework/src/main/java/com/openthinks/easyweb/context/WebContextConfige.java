@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.openthinks.easyweb.annotation.configure.ScanWay.ScanWayEnum;
 import com.openthinks.easyweb.context.parser.ConfigureParser;
 import com.openthinks.easyweb.context.parser.WebConfigureAnnoationParser;
 import com.openthinks.easyweb.context.parser.WebConfigureFileParser;
@@ -34,7 +35,7 @@ public class WebContextConfige implements WebConfigure {
 	@Override
 	public Set<String> getScanPackages() {
 		String[] packages = parser.scanPackages();
-		return new HashSet<String>(Arrays.asList(packages));
+		return new HashSet<>(Arrays.asList(packages));
 	}
 
 	@Override
@@ -51,6 +52,11 @@ public class WebContextConfige implements WebConfigure {
 			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e);
 		}
 		return new NullBootstrap();
+	}
+
+	@Override
+	public ScanWayEnum getScanWay() {
+		return parser.getScanWay();
 	}
 
 }

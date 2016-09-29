@@ -1,5 +1,6 @@
 package com.openthinks.easyweb.context.parser;
 
+import com.openthinks.easyweb.annotation.configure.ScanWay.ScanWayEnum;
 import com.openthinks.easyweb.context.Bootstrap;
 
 /**
@@ -30,4 +31,9 @@ public interface ConfigureParser {
 	 */
 	Bootstrap bootstarp() throws ClassNotFoundException, InstantiationException, IllegalAccessException;
 
+	/**
+	 * get the EasyWeb controller package scan way
+	 * @return ScanWayEnum
+	 */
+	ScanWayEnum getScanWay();
 }

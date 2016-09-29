@@ -3,6 +3,7 @@ package com.openthinks.easyweb.context;
 import java.util.Set;
 
 import com.openthinks.easyweb.WebStatic;
+import com.openthinks.easyweb.annotation.configure.ScanWay.ScanWayEnum;
 
 /**
  * The EasyWeb configuration
@@ -30,5 +31,11 @@ public interface WebConfigure {
 	 * @return Bootstrap
 	 */
 	Bootstrap getBootstarp();
+
+	/**
+	 * get the EasyWeb controller package scan way
+	 * @return ScanWayEnum
+	 */
+	ScanWayEnum getScanWay();
 
 }
