@@ -29,7 +29,8 @@ public @interface ResponseReturn {
 	ResponseReturnType contentType() default ResponseReturnType.TEXT_PLAN;
 
 	public enum ResponseReturnType {
-		TEXT_PLAN("text/plain"), TEXT_HTML("text/html"), TEXT_XML("text/xml"), TEXT_JAVASCRIPT("text/javascript");
+		TEXT_PLAN("text/plain"), TEXT_HTML("text/html"), TEXT_XML("text/xml"), TEXT_JSON("text/json"), TEXT_JAVASCRIPT(
+				"text/javascript");
 		private String value;
 
 		private ResponseReturnType(String value) {
