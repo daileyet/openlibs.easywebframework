@@ -41,9 +41,6 @@ public class WebProcessMonitor extends HttpServlet {
 	private Properties templateConfig = new Properties();
 	private String remoteEnable = "false";
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public WebProcessMonitor() {
 		super();
 		try {
@@ -65,10 +62,6 @@ public class WebProcessMonitor extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -84,11 +77,6 @@ public class WebProcessMonitor extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @param request
-	 * @param enable
-	 * @return
-	 */
 	protected boolean calculateAndGetEnable() {
 		boolean enable = false;
 		//firstly, check application attribute 
@@ -128,10 +116,6 @@ public class WebProcessMonitor extends HttpServlet {
 		return isLocal;
 	}
 
-	/**
-	 * @throws IOException
-	 * 
-	 */
 	protected void generatePage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		WebContainer webContainer = WebContexts.get().getWebContainer();
 		StringBuffer buffer = readFromSource(templateConfig.getProperty(TEMPLATE_CONFIG_PAGE_NAME));
@@ -165,10 +149,6 @@ public class WebProcessMonitor extends HttpServlet {
 		out.flush();
 	}
 
-	/**
-	 * @param dynamicContent
-	 * @param controller
-	 */
 	protected void generateAndAppendRow(StringBuffer dynamicContent, WebInstancer instancer, boolean needLink) {
 		dynamicContent.append("<tr>");
 		dynamicContent.append("<td>" + instancer.getName() + "</td>");
@@ -195,10 +175,6 @@ public class WebProcessMonitor extends HttpServlet {
 		dynamicContent.append("</tr>");
 	}
 
-	/**
-	 * @param webContainer
-	 * @return
-	 */
 	protected void sortInstancers(Set<? extends WebInstancer> instancers) {
 		instancers.stream().sorted((inst1, inst2) -> {
 			return inst1.getName().compareTo(inst2.getName());
@@ -229,10 +205,6 @@ public class WebProcessMonitor extends HttpServlet {
 		return method.getFullPath() + requestSuffix.options()[0];
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

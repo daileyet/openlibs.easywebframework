@@ -2,6 +2,11 @@ package com.openthinks.easyweb.utils.json;
 
 import com.google.gson.Gson;
 
+/**
+ * JSON object wrapper
+ * @author dailey.yet@outlook.com
+ *
+ */
 public class OperationJson {
 	public static final String ERROR_TYEP = "ERROR";
 	public static final String SUCESS_TYEP = "SUCESS";

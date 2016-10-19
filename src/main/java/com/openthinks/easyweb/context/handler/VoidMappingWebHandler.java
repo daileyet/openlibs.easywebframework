@@ -34,15 +34,10 @@ public class VoidMappingWebHandler implements WebHandler {
 		process((HttpServletRequest) request, (HttpServletResponse) response, filterChain, webMethod);
 	}
 
-	/**
-	 * @param req
-	 * @param resp
-	 * @param webMethod
-	 */
 	protected void process(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain,
 			WebMethod webMethod) {
 		try {
-			webMethod.invoke(req, resp,filterChain);
+			webMethod.invoke(req, resp, filterChain);
 		} catch (Exception e) {
 			ProcessLogger.error(CommonUtilities.getCurrentInvokerMethod(), e);
 		}

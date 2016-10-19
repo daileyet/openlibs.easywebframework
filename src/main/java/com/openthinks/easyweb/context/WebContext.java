@@ -13,19 +13,19 @@ public interface WebContext {
 
 	/**
 	 * get EasyWeb configuration
-	 * @return WebConfigure
+	 * @return WebConfigure {@link WebConfigure}
 	 */
 	public WebConfigure getWebConfigure();
 
 	/**
 	 * get EasyWeb processor
-	 * @return WebProcesser
+	 * @return WebProcesser {@link WebProcesser}
 	 */
 	public WebProcesser getWebProcesser();
 
 	/**
 	 * get EasyWeb all objects
-	 * @return WebContainer
+	 * @return WebContainer {@link WebContainer}
 	 */
 	public WebContainer getWebContainer();
 }

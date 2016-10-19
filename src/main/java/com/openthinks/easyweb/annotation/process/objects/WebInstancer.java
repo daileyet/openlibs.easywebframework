@@ -109,9 +109,6 @@ public abstract class WebInstancer implements WebUnit {
 		return WebUtils.contactPath(parent().getFullPath(), this.getRelativePath());
 	}
 
-	/* (non-Javadoc)
-	 * @see com.openthinks.easyweb.annotation.process.objects.WebUnit#parent()
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public WebContainer parent() {

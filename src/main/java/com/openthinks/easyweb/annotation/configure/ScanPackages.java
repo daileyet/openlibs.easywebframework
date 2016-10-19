@@ -18,7 +18,7 @@ public @interface ScanPackages {
 
 	/**
 	 * the array for need scanned package name, the easyweb framework will search the {@link Controller} and initial them at these packages
-	 * @return String[]
+	 * @return array of need scan package
 	 */
 	String[] value();
 }

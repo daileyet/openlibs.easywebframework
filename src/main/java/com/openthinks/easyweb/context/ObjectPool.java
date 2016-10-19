@@ -22,9 +22,9 @@ public class ObjectPool {
 	// private final ObjectList objects = new ObjectList();
 	private final FirstLastObjectNameLookUp pool = new FirstLastObjectNameLookUp();
 	// map to shared objects by alias
-	private final Map<String, Ends> aliasMap = new ConcurrentHashMap<String, Ends>();
+	private final Map<String, Ends> aliasMap = new ConcurrentHashMap<>();
 	// map to shared objects by class type
-	private final Map<Class<?>, Ends> typeMap = new ConcurrentHashMap<Class<?>, Ends>();
+	private final Map<Class<?>, Ends> typeMap = new ConcurrentHashMap<>();
 
 	public ObjectPool() {
 	}
@@ -35,7 +35,7 @@ public class ObjectPool {
 
 	/**
 	 * register the special object by the Class type
-	 * @param type Class<?>
+	 * @param type Class
 	 * @param object Object
 	 */
 	public void put(Class<?> type, Object object) {
@@ -89,7 +89,7 @@ public class ObjectPool {
 	 * get the shared object by alias name key
 	 * @param alias String
 	 * @param <T> Class
-	 * @return T
+	 * @return T shared object with the given alias name
 	 */
 	@SuppressWarnings("unchecked")
 	public <T> T get(String alias) {
@@ -130,10 +130,10 @@ class FirstLastObjectNameLookUp {
 	 *  			VALUE	: Map(	KEY:Class Name last character; VALUE: ObjectList)
 	 *  						
 	 */
-	Map<Character, Map<Character, ObjectList>> entryMap = new ConcurrentHashMap<Character, Map<Character, ObjectList>>();
+	Map<Character, Map<Character, ObjectList>> entryMap = new ConcurrentHashMap<>();
 
 	// combine entry map
-	Map<String, ObjectList> combineMap = new ConcurrentHashMap<String, ObjectList>();
+	Map<String, ObjectList> combineMap = new ConcurrentHashMap<>();
 
 	Ends findEnds(Object sharedObject) {
 		Ends ends = Ends.build(sharedObject);
@@ -161,7 +161,7 @@ class FirstLastObjectNameLookUp {
 		ends = Ends.build(object);
 		Map<Character, ObjectList> firstEntry = entryMap.get(ends.first());
 		if (firstEntry == null) {
-			firstEntry = new ConcurrentHashMap<Character, ObjectList>();
+			firstEntry = new ConcurrentHashMap<>();
 			entryMap.put(ends.first(), firstEntry);
 		}
 		ObjectList secondEntry = firstEntry.get(ends.last());
@@ -209,7 +209,7 @@ class FirstLastObjectNameLookUp {
 	}
 
 	private class ObjectList {
-		private final List<Object> _objects = new ArrayList<Object>();
+		private final List<Object> _objects = new ArrayList<>();
 		private final Lock lock = new ReentrantLock();
 
 		void replace(int index, Object newObject) {
@@ -316,61 +316,3 @@ class Ends {
 		return getIndex() != null && getIndex() >= 0;
 	}
 }
-/**
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * */

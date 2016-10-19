@@ -34,19 +34,18 @@ import com.openthinks.easyweb.context.RequestSuffix;
 
 /**
  * Strategy for {@link WebFilter} path
+ * date: 2016/8/26
  * @author dailey.yet@outlook.com
- * @date 2016/8/26
  */
 public interface FilterPathMatchStrategy {
 
 	/**
 	 * find the match filter path
 	 * @param originalPath String request URI without {@link RequestSuffix} etc. /web/test/index
-	 * @param filterPaths Set<T> registered filter path
-	 * @param <T> String
+	 * @param filterPaths Set registered filter path
 	 * @see SimpleFilterPathMatchStrategy
 	 * @see RegExrFilterPathMatchStrategy
-	 * @return Optional<T>
+	 * @return Optional
 	 */
 	Optional<String> findMatch(String originalPath, Set<String> filterPaths);
 

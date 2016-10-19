@@ -12,18 +12,19 @@ import com.openthinks.easyweb.context.handler.WebHandler;
 
 /**
  * Main servlet for easywebframework to dispatch http request
+ * date	2013-6-6
  * @author minjdai
- * @date 2013-6-6
  */
 public class EasyWebDispatcher extends HttpServlet {
 	private static final long serialVersionUID = -3908723323659757112L;
 
 	/**
 	 * dispatch all http request to this servlet to the special {@link WebHandler} to handle
+	 * 
 	 * @param req HttpServletRequest
 	 * @param resp HttpServletResponse
-	 * @throws ServletException
-	 * @throws IOException
+	 * @throws ServletException occur servlet process exception
+	 * @throws IOException occur IO error
 	 */
 	void dispatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		WebHandler handler = Handlers.getHandler(req, req.getSession().getServletContext());

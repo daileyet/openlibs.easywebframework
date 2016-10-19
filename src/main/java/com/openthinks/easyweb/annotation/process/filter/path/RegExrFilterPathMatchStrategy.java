@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.openthinks.easyweb.WebUtils;
+import com.openthinks.easyweb.context.RequestSuffix;
 import com.openthinks.libs.utilities.logger.ProcessLogger;
 
 /**
@@ -41,8 +42,9 @@ import com.openthinks.libs.utilities.logger.ProcessLogger;
 public class RegExrFilterPathMatchStrategy implements FilterPathMatchStrategy {
 
 	/**
-	 * @param filterPaths Set<T> container register filter path, and will treat as regular expressions
-	 * @param <T> String
+	 * find the match filter path
+	 * @param originalPath  String request URI without {@link RequestSuffix} etc. /web/test/index
+	 * @param filterPaths Set container register filter path, and will treat as regular expressions
 	 */
 	@Override
 	public Optional<String> findMatch(String originalPath, Set<String> filterPaths) {

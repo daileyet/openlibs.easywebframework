@@ -61,11 +61,6 @@ public class DefaultPackageScanner implements PackageScanner {
 		}
 	}
 
-	/**
-	 * @param container
-	 * @param filterProcesser
-	 * @param path
-	 */
 	protected void scanPackageFilter(WebContainer container, String path) {
 		WebFilterProcesser filterProcesser = new WebFilterProcesser();
 		List<Class<?>> filterClasses = filterFilterClass(path);
@@ -77,11 +72,6 @@ public class DefaultPackageScanner implements PackageScanner {
 		}
 	}
 
-	/**
-	 * @param container
-	 * @param controllerProcesser
-	 * @param path
-	 */
 	protected void scanPackageController(WebContainer container, String path) {
 		WebControllerProcesser controllerProcesser = new WebControllerProcesser();
 		List<Class<?>> controllerClasses = filterControllerClass(path);

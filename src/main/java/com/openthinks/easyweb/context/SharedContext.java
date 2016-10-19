@@ -24,11 +24,11 @@ public abstract class SharedContext implements WebContext {
 	 * instanceType and constructor parameters args
 	 * 
 	 * @param <T> lookup object type
-	 * @param searchType
-	 *            Class<T> lookup key type
+	 * @param type
+	 *            Class lookup key type
 	 * @param args
 	 *            Object[] instance constructor parameters
-	 * @return T
+	 * @return T lookup object
 	 */
 	public <T> T lookup(Class<T> type, Object... args) {
 		return lookup(type, InstanceWrapper.build(type), args);
@@ -43,13 +43,14 @@ public abstract class SharedContext implements WebContext {
 	 * instanceType and constructor parameters args
 	 * 
 	 * @param <T> lookup object type
+	 * @param <E> lookup object type
 	 * @param searchType
-	 *            Class<T> lookup key type
-	 * @param instanceType
-	 *            Class<E> instance type when not lookup the key
+	 *            Class lookup key type
+	 * @param instancewrapper
+	 *            Class instance type when not lookup the key
 	 * @param args
 	 *            Object[] instance constructor parameters
-	 * @return T
+	 * @return T lookup object
 	 */
 	public <T, E extends T> T lookup(final Class<T> searchType, InstanceWrapper<E> instancewrapper, Object... args) {
 		T object = objectPool.get(searchType);
@@ -78,10 +79,22 @@ public abstract class SharedContext implements WebContext {
 		}
 	}
 
+	/**
+	 * look up object by its bean name
+	 * @param <T> lookup object type
+	 * @param beanName String lookup object mapping name
+	 * @return T lookup object
+	 */
 	public <T> T lookup(String beanName) {
 		return objectPool.get(beanName);
 	}
 
+	/**
+	 * register object and mapping it to given bean name
+	 * @param <T> register object type
+	 * @param beanName String bean name
+	 * @param object register object
+	 */
 	public <T> void register(String beanName, T object) {
 		if (object != null) {
 			objectPool.put(beanName, object);

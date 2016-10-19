@@ -28,8 +28,9 @@ package com.openthinks.easyweb;
 import com.openthinks.easyweb.context.EasyWebFilterContext;
 
 /**
+ * date:	2016/8/26
  * @author dailey.yet@outlook.com
- * @date	2016/8/26
+ * 
  */
 public interface EasyWebFilterListener {
 	/**

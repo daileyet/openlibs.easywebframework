@@ -13,33 +13,33 @@ public interface WebUnit {
 
 	/**
 	 * relative path for this unit
-	 * @return String
+	 * @return relative web path
 	 */
 	public String getRelativePath();
 
 	/**
 	 * full path for this unit
-	 * @return String
+	 * @return full web path
 	 */
 	public String getFullPath();
 
 	/**
 	 * unit name
-	 * @return String
+	 * @return name of unit
 	 */
 	public String getName();
 
 	/**
 	 * parent unit
 	 * @param <T> WebUnit
-	 * @return T
+	 * @return T parent unit
 	 */
 	public <T extends WebUnit> T parent();
 
 	/**
 	 * get children set
 	 * @param <T> WebUnit
-	 * @return Set<T>
+	 * @return Set children units
 	 */
 	public <T extends WebUnit> Set<T> children();
 

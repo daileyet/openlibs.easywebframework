@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The request url suffixes, likes: <dl>http://www.openthinks.com/api/add.do</dl>
+ * The request url suffixes, likes: <i>http://www.openthinks.com/api/add.do</i>
  * ".do" is the request url suffixes, it will be used to configure easy web framework.
  * @author minjdai
  * 

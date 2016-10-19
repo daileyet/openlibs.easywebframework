@@ -5,7 +5,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * The request suffix 
+ * The request suffix; for example:
+ * <ul>
+ * <li> http://localhost:8080/easywebexample/index.do	- .do</li>
+ * <li> http://localhost:8080/easywebexample/index.htm	- .htm</li>
+ * </ul>
  * @author dailey.yet@outlook.com
  *
  */

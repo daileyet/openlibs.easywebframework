@@ -32,8 +32,9 @@ import com.openthinks.easyweb.EasyWebFilterListener;
 
 /**
  * Context used in {@link EasyWebFilter}
+ * date:	2016/8/26
+ * 
  * @author dailey.yet@outlook.com
- * @date	2016/8/26
  */
 public interface EasyWebFilterContext {
 
@@ -45,7 +46,6 @@ public interface EasyWebFilterContext {
 
 	/**
 	 * invoke in {@link EasyWebFilter#destroy()}
-	 * @param filterConfig FilterConfig
 	 */
 	void fireDestroy();
 

@@ -7,8 +7,8 @@ import java.lang.annotation.Target;
 
 /**
  * Represent the response trait for the HTTP request
+ * date: 2013-9-26
  * @author minjdai
- * @since 2013-9-26
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -16,18 +16,20 @@ public @interface ResponseReturn {
 
 	/**
 	 * the HTTP response charset
-	 * @return String
+	 * @return charset
 	 */
-	String charset()
-
-	default "UTF-8";
+	String charset() default "UTF-8";
 
 	/**
 	 * the HTTP response content type
-	 * @return ResponseReturnType
+	 * @return {@link ResponseReturnType}
 	 */
 	ResponseReturnType contentType() default ResponseReturnType.TEXT_PLAN;
 
+	/**
+	 * response return type enum
+	 *
+	 */
 	public enum ResponseReturnType {
 		TEXT_PLAN("text/plain"), TEXT_HTML("text/html"), TEXT_XML("text/xml"), TEXT_JSON("text/json"), TEXT_JAVASCRIPT(
 				"text/javascript");

@@ -18,7 +18,7 @@ public @interface BootstrapClass {
 
 	/**
 	 * the full name of bootstrap class
-	 * @return String
+	 * @return bootstrap class full name
 	 */
-	String value() default "openthinks.easyweb.context.NullBootstrap";
+	String value() default "com.openthinks.easyweb.context.NullBootstrap";
 }

@@ -41,8 +41,9 @@ import com.openthinks.libs.utilities.Checker;
 
 /**
  * Container for {@link EasyWebFilterContext}
+ * date:	2016/8/26
+ * 
  * @author dailey.yet@outlook.com
- * @date	2016/8/26
  */
 public final class EasyWebFilterContexts {
 	private static final Map<Class<? extends EasyWebFilter>, EasyWebFilterContext> ctxBook = new ConcurrentHashMap<>();
@@ -50,7 +51,7 @@ public final class EasyWebFilterContexts {
 
 	/**
 	 * find {@link EasyWebFilterContext} instance by reference Class {@link EasyWebFilter}
-	 * @param webFilterClazz Class<? extends EasyWebFilter>
+	 * @param webFilterClazz web filter class
 	 * @return EasyWebFilterContext
 	 */
 	public static EasyWebFilterContext get(Class<? extends EasyWebFilter> webFilterClazz) {

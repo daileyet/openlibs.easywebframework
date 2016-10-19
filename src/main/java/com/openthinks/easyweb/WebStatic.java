@@ -28,7 +28,7 @@ package com.openthinks.easyweb;
 import java.io.File;
 
 /**
- * @Description: All static const variables and property
+ * All static const variables and property
  * @author dailey.yet@outlook.com
  */
 public final class WebStatic {
@@ -49,10 +49,10 @@ public final class WebStatic {
 	 * Web application class directory after deploy; <BR>
 	 * also can the attribute name of main servlet or init parameter of this main servlet
 	 * 	<pre>
-	 *	&lt;context-param>
-	 *	&nbsp;&nbsp;&lt;param-name>easywebClassDir&lt;/param-name>
-	 *	&nbsp;&nbsp;&lt;param-value>R:\to\path\target\classes&lt;/param-value>
-	 *	&lt;/context-param>
+	 *	&lt;context-param&gt;
+	 *	&nbsp;&nbsp;&lt;param-name&gt;easywebClassDir&lt;/param-name&gt;
+	 *	&nbsp;&nbsp;&lt;param-value&gt;R:\to\path\target\classes&lt;/param-value&gt;
+	 *	&lt;/context-param&gt;
 	 *  </pre>
 	 */
 	public static final String WEB_CLASS_DIR = "easywebClassDir";
@@ -61,10 +61,10 @@ public final class WebStatic {
 	/**
 	 * EasyWeb application configure class<BR>
 	 * 	<pre>
-	 *	&lt;context-param>
-	 *	&nbsp;&nbsp;&lt;param-name>configureClassName&lt;/param-name>
-	 *	&nbsp;&nbsp;&lt;param-value>com.openthinks.easyweb.test.EasyWebConfigure&lt;/param-value>
-	 *	&lt;/context-param>
+	 *	&lt;context-param&gt;
+	 *	&nbsp;&nbsp;&lt;param-name&gt;configureClassName&lt;/param-name&gt;
+	 *	&nbsp;&nbsp;&lt;param-value&gt;com.openthinks.easyweb.test.EasyWebConfigure&lt;/param-value&gt;
+	 *	&lt;/context-param&gt;
 	 *  </pre>
 	 */
 	public static final String WEB_CONFIGURE_CLASS_NAME = "configureClassName";

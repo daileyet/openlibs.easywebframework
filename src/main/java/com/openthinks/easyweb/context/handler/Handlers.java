@@ -21,7 +21,7 @@ public class Handlers {
 	 * get the {@link WebHandler} instance by HTTP servlet request 
 	 * @param req HttpServletRequest
 	 * @param servletContext ServletContext
-	 * @return WebHandler
+	 * @return {@link WebHandler} instance
 	 */
 	public static WebHandler getHandler(HttpServletRequest req, ServletContext servletContext) {
 		String path = req.getRequestURI();
@@ -39,7 +39,7 @@ public class Handlers {
 	 * get the {@link FilterHandler} instance by HTTP servlet request 
 	 * @param request ServletRequest
 	 * @param servletContext ServletContext
-	 * @return FilterHandler
+	 * @return {@link FilterHandler} instance
 	 */
 	public static FilterHandler getFilterHandler(ServletRequest request, ServletContext servletContext) {
 		String path = ((HttpServletRequest) request).getRequestURI();

@@ -115,12 +115,11 @@ public class WebContainer implements WebUnit {
 	}
 
 	/**
-	 * find {@link WebMethod} by controllerMapping path which equals {@link
-	 * WebMethod.getFullPath()}
+	 * find {@link WebMethod} by controllerMapping path which equals {@link WebMethod#getFullPath()}
 	 * 
 	 * @param requestMapingPath
 	 *            String request mapping path without {@link RequestSuffix} etc. /web/test/index
-	 * @return WebMethod
+	 * @return {@link WebMethod}
 	 */
 	public WebMethod lookup(String requestMapingPath) {
 		Checker.require(requestMapingPath).notNull();
@@ -131,10 +130,9 @@ public class WebContainer implements WebUnit {
 	}
 
 	/**
-	 * find {@link WebMethod} by filterMapping path which equals {@link
-	 * WebMethod.getFullPath()}
-	 * @param requestMapingPath String request mapping path without {@link RequestSuffix} etc. /web/test/index
-	 * @return WebMethod
+	 * find {@link WebMethod} by filterMapping path which equals {@link WebMethod#getFullPath()}
+	 * @param requestMapingPath  request mapping path without {@link RequestSuffix} etc. /web/test/index
+	 * @return {@link WebMethod}
 	 */
 	public WebMethod lookupFilter(String requestMapingPath) {
 		Checker.require(requestMapingPath).notNull();
@@ -153,7 +151,7 @@ public class WebContainer implements WebUnit {
 	}
 
 	/**
-	 * build
+	 * rebuild web request mapping
 	 */
 	public void buildMapping() {
 		controllerMapping.clear();

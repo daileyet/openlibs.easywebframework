@@ -18,8 +18,8 @@ import com.openthinks.easyweb.context.handler.WebAttributers;
 
 /**
  * The web method unit
+ * date: 2013-6-6
  * @author minjdai
- * @date 2013-6-6
  */
 public class WebMethod implements WebUnit {
 
@@ -38,12 +38,12 @@ public class WebMethod implements WebUnit {
 	public String getRelativePath() {
 		return mapping.value();
 	}
-	
+
 	/**
 	 * get relative path include parent {@link WebInstancer#getRelativePath()}
 	 * @return String
 	 */
-	public String getRelativePath2(){
+	public String getRelativePath2() {
 		return WebUtils.contactPath(parent().getRelativePath(), this.getRelativePath());
 	}
 
@@ -89,10 +89,11 @@ public class WebMethod implements WebUnit {
 	 * invoke this web method
 	 * @param req HttpServletRequest
 	 * @param resp HttpServletResponse
-	 * @return Object
-	 * @throws IllegalArgumentException
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
+	 * @param filterChain {@linkplain FilterChain}
+	 * @return execution result return  
+	 * @throws IllegalArgumentException if the method is an instance method and the specified object argument is not an instance of the class or interface declaring the underlying method (or of a subclass or implementor thereof); if the number of actual and formal parameters differ; if an unwrapping conversion for primitive arguments fails; or if, after possible unwrapping, a parameter value cannot be converted to the corresponding formal parameter type by a method invocation conversion.
+	 * @throws IllegalAccessException  if this Method object is enforcing Java language access control and the underlying method is inaccessible.
+	 * @throws InvocationTargetException  if the underlying method throws an exception.
 	 */
 	public Object invoke(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain)
 			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {

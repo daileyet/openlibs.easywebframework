@@ -41,8 +41,8 @@ import com.openthinks.easyweb.context.handler.Handlers;
 
 /**
  * Main filter for easywebframework to main servlet
+ * date:	2016/8/25
  * @author dailey.yet@outlook.com
- * @date	2016/8/25
  */
 public class EasyWebFilter implements Filter {
 

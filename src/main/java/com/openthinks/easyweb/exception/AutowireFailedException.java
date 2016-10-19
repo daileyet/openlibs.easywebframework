@@ -31,45 +31,23 @@ package com.openthinks.easyweb.exception;
  */
 public class AutowireFailedException extends RuntimeException {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7537990619932538902L;
 
-	/**
-	 * 
-	 */
 	public AutowireFailedException() {
 	}
 
-	/**
-	 * @param message
-	 */
 	public AutowireFailedException(String message) {
 		super(message);
 	}
 
-	/**
-	 * @param cause
-	 */
 	public AutowireFailedException(Throwable cause) {
 		super(cause);
 	}
 
-	/**
-	 * @param message
-	 * @param cause
-	 */
 	public AutowireFailedException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	/**
-	 * @param message
-	 * @param cause
-	 * @param enableSuppression
-	 * @param writableStackTrace
-	 */
 	public AutowireFailedException(String message, Throwable cause, boolean enableSuppression,
 			boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);

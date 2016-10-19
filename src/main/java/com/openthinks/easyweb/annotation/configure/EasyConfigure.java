@@ -17,11 +17,10 @@ import java.lang.annotation.Target;
  * &lt;/context-param&gt;
  * </code></pre>
  * easyweb annotation configure example:
- * <pre><code>@EasyConfigure
-@ScanPackages({ "openthinks.easyweb.test" })
-@BootstrapClass("openthinks.easyweb.test.BootstrapImpl")
-@RequestSuffixs(".do,.htm")
-public class EasyWebConfigure {
+ * <pre><code>{@link EasyConfigure} 
+{@link BootstrapClass}("openthinks.easyweb.test.BootstrapImpl")
+{@link RequestSuffixs}(".do,.htm")
+public class EasyWebConfigure 
 	...
 }</code></pre>
  * @author minjdai

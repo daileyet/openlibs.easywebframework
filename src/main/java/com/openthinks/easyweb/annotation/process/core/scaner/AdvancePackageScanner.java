@@ -65,10 +65,6 @@ public class AdvancePackageScanner implements PackageScanner {
 		processFilters(container, allFilterClazzs);
 	}
 
-	/**
-	 * @param container
-	 * @param allFilterClazzs
-	 */
 	protected void processFilters(WebContainer container, Set<Class<?>> allFilterClazzs) {
 		List<Object> webFilters = getInstances(allFilterClazzs);
 		WebFilterProcesser filterProcesser = new WebFilterProcesser();
@@ -79,10 +75,6 @@ public class AdvancePackageScanner implements PackageScanner {
 		}
 	}
 
-	/**
-	 * @param container
-	 * @param allControllerClazzs
-	 */
 	protected void processController(WebContainer container, Set<Class<?>> allControllerClazzs) {
 		List<Object> webControllers = getInstances(allControllerClazzs);
 		WebControllerProcesser controllerProcesser = new WebControllerProcesser();

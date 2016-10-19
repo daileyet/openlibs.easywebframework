@@ -39,9 +39,11 @@ public class StringMappingWebHandler implements WebHandler {
 	}
 
 	/**
-	 * @param req
-	 * @param resp
-	 * @param webMethod
+	 * process request and make response
+	 * @param req ServletRequest
+	 * @param resp ServletResponse
+	 * @param filterChain FilterChain
+	 * @param webMethod WebMethod
 	 */
 	protected void process(ServletRequest req, ServletResponse resp, FilterChain filterChain, WebMethod webMethod) {
 		try {
@@ -71,9 +73,9 @@ public class StringMappingWebHandler implements WebHandler {
 				} else if (isFilterPassPath(responseValue)) {
 					if (filterChain != null)
 						filterChain.doFilter(req, resp);
-				} else if (isFilterPassPath(responseValue)) {  
+				} else if (isFilterPassPath(responseValue)) {
 					//DO NOTHING
-				}else {//forward flag
+				} else {//forward flag
 					responseValue = WebUtils.contactPath("", responseValue);
 					req.getRequestDispatcher(responseValue).forward(req, resp);
 				}

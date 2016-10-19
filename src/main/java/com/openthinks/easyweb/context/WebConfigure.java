@@ -16,25 +16,25 @@ public interface WebConfigure {
 
 	/**
 	 * get the EasyWeb controller package
-	 * @return Set<String>
+	 * @return collection of packages
 	 */
 	Set<String> getScanPackages();
 
 	/**
 	 * get the EasyWeb request suffix
-	 * @return RequestSuffix
+	 * @return RequestSuffix {@link RequestSuffix}
 	 */
 	RequestSuffix getRequestSuffix();
 
 	/**
 	 * get the implementation of {@link Bootstrap}
-	 * @return Bootstrap
+	 * @return Bootstrap {@link Bootstrap}
 	 */
 	Bootstrap getBootstarp();
 
 	/**
 	 * get the EasyWeb controller package scan way
-	 * @return ScanWayEnum
+	 * @return ScanWayEnum {@link ScanWayEnum}
 	 */
 	ScanWayEnum getScanWay();
 

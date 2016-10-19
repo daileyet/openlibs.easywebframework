@@ -37,8 +37,8 @@ import com.openthinks.easyweb.annotation.process.objects.WebMethod;
 
 /**
  * handle for different {@link WebMethod}; used in {@link EasyWebFilter}
+ * date: 2016/8/25
  * @author dailey.yet@outlook.com
- * @date 2016/8/25
  */
 public interface FilterHandler {
 	void handle(ServletRequest request, ServletResponse response, FilterChain chain)

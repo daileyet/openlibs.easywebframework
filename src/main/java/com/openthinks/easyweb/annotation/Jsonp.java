@@ -7,15 +7,15 @@ import java.lang.annotation.Target;
 
 /**
  * Represent the response as JSONP data format
+ * date: 2016-5-6
  * @author dailey.yet@outlook.com
- * @since 2016-5-6
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Jsonp {
 	/**
-	 * 
-	 * @return String callback function in client side parameter name
+	 * callback function name
+	 * @return callback function in client side parameter name
 	 */
 	String value() default "callback";
 }

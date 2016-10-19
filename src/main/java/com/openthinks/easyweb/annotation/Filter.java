@@ -32,8 +32,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
+ * Represent a Filter class, those marked this annotation class need to make their name end with <code>Filter</code>
+ * date: 2016/8/25
  * @author dailey.yet@outlook.com
- * @date 2016/8/25
  */
 @Retention(RUNTIME)
 @Target(TYPE)
@@ -41,14 +42,14 @@ public @interface Filter {
 	/**
 	 * filter request path mapping<BR>
 	 * default value will parse to "/"
-	 * @return String 
+	 * @return filter relative request path 
 	 */
 	public String value() default "";
 
 	/**
 	 * filter name<BR>
 	 * default value will named the filter name as class name which lower case the first character 
-	 * @return String
+	 * @return filter name
 	 */
 	public String name() default "";
 }

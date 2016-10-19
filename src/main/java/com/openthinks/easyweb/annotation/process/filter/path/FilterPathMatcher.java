@@ -34,8 +34,8 @@ import com.openthinks.easyweb.context.WebConfigure;
 import com.openthinks.easyweb.context.WebContexts;
 
 /**
+ * date: 2016/8/26
  * @author dailey.yet@outlook.com
- * @date 2016/8/26
  */
 public final class FilterPathMatcher {
 	public static final FilterPathMatchStrategy REGEXR = new RegExrFilterPathMatchStrategy();
@@ -87,9 +87,8 @@ public final class FilterPathMatcher {
 	/**
 	 * @see FilterPathMatchStrategy#findMatch(String, Set)
 	 * @param originalPath String
-	 * @param filterPaths Set<T>
-	 * @param <T> String
-	 * @return Optional<T>
+	 * @param filterPaths set of filter paths
+	 * @return Optional
 	 */
 	public Optional<String> findMatch(String originalPath, Set<String> filterPaths) {
 		if (this.strategy == null) {

@@ -17,14 +17,14 @@ public @interface Controller {
 	/**
 	 * controller request path mapping<BR>
 	 * default value will parse to "/"
-	 * @return String 
+	 * @return controller request path 
 	 */
 	public String value() default "";
 
 	/**
 	 * controller name<BR>
 	 * default value will named the controller name as class name which lower case the first character 
-	 * @return String
+	 * @return controller name
 	 */
 	public String name() default "";
 }

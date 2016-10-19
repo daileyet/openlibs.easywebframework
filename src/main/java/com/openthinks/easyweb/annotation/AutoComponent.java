@@ -32,16 +32,28 @@ import java.lang.annotation.Target;
 
 /**
  * Represent a autowire field, and autowire by {@code KeyType}, which support bean name and bean class;
+ * date: 2016/7/12
  * @author dailey.yet@outlook.com
- * @date 2016/7/12
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface AutoComponent {
+	/**
+	 * identity how to generate the injection instance object
+	 * @return KeyType
+	 */
 	KeyType value() default KeyType.CLASS;
 
+	/**
+	 * get bean name when {@link KeyType} is {@link KeyType#BEAN_NAME}
+	 * @return bean name
+	 */
 	String beanName() default "";
 
+	/**
+	 * get instance class type when {@link KeyType} is {@link KeyType#CLASS}
+	 * @return instance class type
+	 */
 	Class<?> implementClass() default Void.class;
 
 	public enum KeyType {
