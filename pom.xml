@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.openthinks</groupId>
-	<artifactId>easyweb</artifactId>
+	<artifactId>openlibs.easyweb</artifactId>
 	<packaging>jar</packaging>
-	<version>1.2</version>
+	<version>1.2.1</version>
 
 	<name>Easyweb framework</name>
 	<description>Easyweb is a java web MVC framework.It is free under Apache 2 license. Easyweb is simple, pure and easy to understand.</description>
@@ -55,8 +55,8 @@
 		</dependency>
 		<dependency>
 			<groupId>com.openthinks.libs</groupId>
-			<artifactId>utilities</artifactId>
-			<version>1.0</version>
+			<artifactId>openlibs.utilities</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.reflections</groupId>
@@ -66,7 +66,8 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
+			<version>2.2.1</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>

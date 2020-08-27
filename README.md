@@ -14,8 +14,8 @@ Easyweb is a java web MVC framework.It is free under Apache 2 license. Easyweb i
 ```xml
 <dependency>
   <groupId>com.openthinks</groupId>
-  <artifactId>easyweb</artifactId>
-  <version>1.2</version>
+  <artifactId>openlibs.easyweb</artifactId>
+  <version>1.2.1</version>
 </dependency>
 ```
 #### Configure project by annotationed POJO class
@@ -81,4 +81,4 @@ to get page which render by **hello.jsp**
 *easywebexample* is app web root context.
 
 ## Documentation
-You can continue with [quick start](https://daileyet.gitbooks.io/easyweb/content/chapter1.html) or refer to the [documentation](https://daileyet.gitbooks.io/easyweb/content/).
+You can continue with [quick start](https://openthinks.gitbook.io/docs/easyweb/chapter1) or refer to the [documentation](https://openthinks.gitbook.io/docs/easyweb).

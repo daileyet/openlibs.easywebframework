@@ -15,8 +15,10 @@ import com.openthinks.libs.utilities.Checker;
 /**
  * The object pool, it will cache all the shared objects which fetch from this pool
  * @author minjdai
+ * @deprecated instead of {@link com.openthinks.libs.utilities.pools.object.ObjectPool}
  * 
  */
+@Deprecated
 public class ObjectPool {
 	// store the shared objects
 	// private final ObjectList objects = new ObjectList();
@@ -144,6 +146,7 @@ class FirstLastObjectNameLookUp {
 		return ends;
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	private ObjectList getObjectList(Ends ends) {
 		Checker.require(ends).notNull();
 		ObjectList objList = combineMap.get(ends.combine());

@@ -10,7 +10,7 @@ import com.openthinks.easyweb.annotation.process.objects.WebContainer;
  * @author minjdai
  *
  */
-public class NullSharedContext extends SharedContext {
+public class NullSharedContext extends SharedContext{
 
 	@Override
 	public WebConfigure getWebConfigure() {
